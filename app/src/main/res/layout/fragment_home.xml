@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/homeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="com.kejaplus.application.ui.home.HomeFragment">
+
+    <RelativeLayout
+        android:id="@+id/imageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/propertyImage"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:foreground="#96222f3e"
+            android:foregroundTintMode="src_atop"
+            android:scaleType="fitXY"
+            android:src="@drawable/house1" />
+
+        <TextView
+            android:id="@+id/txt1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="50dp"
+            android:text="@string/your_house_hunting_partner"
+            android:textColor="#ffff"
+            android:textSize="20sp" />
+
+        <View
+            android:id="@+id/straight_line"
+            android:layout_width="100dp"
+            android:layout_height="2dp"
+            android:layout_below="@id/txt1"
+            android:layout_marginTop="@dimen/layout_padding"
+            android:layout_marginStart="50dp"
+            android:background="@color/backColor" />
+
+        <TextView
+            android:id="@+id/txt2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/straight_line"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="@dimen/layout_padding"
+            android:text="@string/property_for_you"
+            android:textColor="#ffff" />
+
+        <EditText
+            android:id="@+id/search_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt2"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="@dimen/layout_padding"
+            android:background="@drawable/search_view_background"
+            android:ems="17"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="10dp"
+            android:text="@string/search_property"
+            android:textColor="#000"
+            android:textSize="15sp" />
+
+        <ImageButton
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_below="@id/txt2"
+            android:layout_marginTop="@dimen/layout_padding"
+            android:layout_toEndOf="@id/search_view"
+            android:background="@drawable/search_view_button_layout"
+            android:ems="10" />
+    </RelativeLayout>
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="@dimen/view_padding"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageLayout"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        android:id="@+id/recyclerview"
+        tools:itemCount="35"
+        android:scrollbars="vertical"/>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">KejaPlus</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="hello_blank_fragment">Settings fragment</string>
+    <string name="select_property">Select Property</string>
+    <string name="select_number_of_bedroom">Select Number of Bedroom</string>
+    <string name="select_location">Select Location</string>
+    <string name="add_property">Add Property</string>
+    <string name="add_property_fab_button">add property fab button</string>
+    <string name="image">image</string>
+    <string name="choose_image">Choose Image</string>
+    <string name="next">Next</string>
+    <string name="upload_image">Upload Image</string>
+    <string name="property_name">Property Name</string>
+    <string name="condition">Condition</string>
+    <string name="price">Price</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="property_description">Property Description</string>
+    <string name="complete_action_using">Complete action using</string>
+    <string name="your_official_housing_adviser">Your Official Housing Adviser</string>
+    <string name="home">Home</string>
+    <string name="property">Add Property</string>
+    <string name="settings">Settings</string>
+    <string name="your_house_hunting_partner">Your House Hunting Partner</string>
+    <string name="here_you_can_search">Here you can search</string>
+    <string name="search_property">Search Property</string>
+    <string name="property_for_you">Property for You</string>
+
+    <string-array name="property_type">
+        <item>Single Family Houses</item>
+        <item>Luxury Property</item>
+        <item>Vacation Homes</item>
+        <item>Airbnb</item>
+        <item>Town Homes</item>
+        <item>Condominiums</item>
+        <item>Duplex</item>
+        <item>Apartment</item>
+    </string-array>
+
+    <string-array name="number_bedroom">
+        <item>Bed sitter</item>
+        <item>Single room</item>
+        <item>1 bedroom</item>
+        <item>2 bedroom</item>
+        <item>3 bedroom</item>
+        <item>4 bedroom</item>
+        <item>5 bedroom</item>
+        <item>6 bedroom</item>
+    </string-array>
+
+    <string-array name="location">
+        <item>Nairobi</item>
+        <item>Muranga</item>
+        <item>Mombasa</item>
+        <item>Machakos</item>
+        <item>Meru</item>
+        <item>Naivasha</item>
+        <item>Kiambu</item>
+        <item>Nyeri</item>
+    </string-array>
+
+    <string-array name="condition">
+        <item>Excellent</item>
+        <item>Good</item>
+        <item>Better</item>
+        <item>Poor</item>
+    </string-array>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="submit_location">submit</string>
+</resources>
