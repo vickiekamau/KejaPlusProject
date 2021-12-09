@@ -69,7 +69,7 @@ class HomeFragment : Fragment() {
                             propertyArrayList.add(property!!)
                         }
 
-                        propertyRecyclerView.adapter = ImageAdapter(propertyArrayList)
+                        propertyRecyclerView.adapter = ImageAdapter(propertyArrayList,mContext)
                     }
 
                 }

@@ -11,7 +11,7 @@
     <RelativeLayout
         android:id="@+id/imageLayout"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:text="@string/your_house_hunting_partner"
             android:textColor="#ffff"
             android:textSize="20sp" />
