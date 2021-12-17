@@ -79,4 +79,7 @@ dependencies {
 
     // shimmer
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+
+    //load images from firebase ui
+    implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
 }

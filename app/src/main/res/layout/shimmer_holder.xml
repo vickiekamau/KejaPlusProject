@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <GridLayout
+        android:id="@+id/mainGrid"
+        android:rowCount="3"
+        android:columnCount="3"
+        android:alignmentMode="alignMargins"
+        android:columnOrderPreserved="true"
+        android:rowOrderPreserved="true"
+        android:layout_width="match_parent"
+        android:layout_height="430dp"
+        android:padding="4dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- ROW 1  -->
+        <!-- COLUMN 1  -->
+
+
+
+        <include
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+
+            layout="@layout/shimmer_placeholder_layout" />
+        <!-- ROW 2  -->
+        <!-- COLUMN 2  -->
+
+        <include
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            layout="@layout/shimmer_placeholder_layout" />
+
+        <!-- ROW 2  -->
+        <!-- COLUMN 2  -->
+
+        <include
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            layout="@layout/shimmer_placeholder_layout" />
+
+
+
+        <!-- ROW 2  -->
+        <!-- COLUMN 1  -->
+        <include
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            layout="@layout/shimmer_placeholder_layout" />
+
+
+        <!-- COLUMN 2  -->
+
+        <include
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            layout="@layout/shimmer_placeholder_layout" />
+
+        <include
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            layout="@layout/shimmer_placeholder_layout" />
+
+
+
+        <!-- ROW 3  -->
+        <!-- COLUMN 1  -->
+
+        <include
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            layout="@layout/shimmer_placeholder_layout" />
+
+        <!-- COLUMN 2  -->
+
+        <include
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            layout="@layout/shimmer_placeholder_layout" />
+
+        <include
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            layout="@layout/shimmer_placeholder_layout" />
+
+    </GridLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

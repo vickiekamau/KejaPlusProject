@@ -48,8 +48,9 @@ class HomeFragment : Fragment() {
         mContext = container!!.context
 
         propertyRecyclerView = _binding!!.recyclerview
-        propertyRecyclerView.layoutManager = GridLayoutManager(mContext,2)
+        propertyRecyclerView.layoutManager = GridLayoutManager(mContext,3)
         propertyArrayList = arrayListOf<SaveProperty>()
+        _binding?.shimmerFrameLayout?.startShimmerAnimation()
         getPropertyData()
 
         return root
@@ -68,17 +69,31 @@ class HomeFragment : Fragment() {
                             val property = propertySnapshot.getValue(SaveProperty::class.java)
                             propertyArrayList.add(property!!)
                         }
-
+                        _binding?.shimmerFrameLayout?.stopShimmerAnimation()
+                        _binding?.shimmerFrameLayout?.visibility = View.GONE
+                        _binding?.recyclerview?.visibility = View.VISIBLE
                         propertyRecyclerView.adapter = ImageAdapter(propertyArrayList,mContext)
+
                     }
 
                 }
 
                 override fun onCancelled(error: DatabaseError) {
+                    _binding?.shimmerFrameLayout?.visibility = View.GONE
                     Toast.makeText(requireActivity().application,error.toString(),Toast.LENGTH_LONG).show()
                 }
 
             })
 
         }
+
+    override fun onResume() {
+        super.onResume()
+        _binding?.shimmerFrameLayout?.startShimmerAnimation()
+    }
+
+    override fun onPause() {
+        _binding?.shimmerFrameLayout?.stopShimmerAnimation()
+        super.onPause()
+    }
     }

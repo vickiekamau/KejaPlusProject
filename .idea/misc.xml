@@ -10,19 +10,25 @@
         <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/drawable/search_layout.xml" value="1.1821428571428572" />
         <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/drawable/search_view_background.xml" value="0.17239583333333333" />
         <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/drawable/search_view_button_layout.xml" value="0.309375" />
-        <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/activity_main.xml" value="0.278125" />
+        <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/activity_main.xml" value="0.14" />
         <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/activity_maps.xml" value="0.29322916666666665" />
+        <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/activity_spash.xml" value="0.2056159420289855" />
         <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/app_toolbar.xml" value="0.278125" />
+        <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/content_spash.xml" value="0.2056159420289855" />
         <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/dropdown_item.xml" value="0.278125" />
         <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/file_type_choose.xml" value="0.278125" />
         <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/fragment_add_property.xml" value="0.278125" />
         <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/fragment_add_property_two.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/fragment_dashboard.xml" value="0.10833333333333334" />
-        <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/fragment_first.xml" value="0.2056159420289855" />
+        <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/fragment_home.xml" value="0.18" />
         <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/fragment_map.xml" value="0.27760416666666665" />
         <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/fragment_maps.xml" value="0.14" />
         <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/fragment_notifications.xml" value="0.15625" />
+        <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/fragment_second.xml" value="0.2056159420289855" />
         <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/grid_item_view.xml" value="0.21614583333333334" />
+        <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/shimmer_holder.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/shimmer_placeholder_layout.xml" value="0.18229166666666666" />
         <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/menu/bottom_nav_menu.xml" value="0.278125" />
       </map>
     </option>

@@ -1,7 +1,6 @@
 package com.kejaplus.application.Adapters
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,11 +12,11 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.kejaplus.Model.SaveProperty
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.storage.FirebaseStorage
-import com.kejaplus.application.R
 import java.io.File
+import android.net.Uri
+import android.widget.ProgressBar
+
 
 class ImageAdapter(
     private val propertyList: ArrayList<SaveProperty>,
@@ -25,12 +24,13 @@ class ImageAdapter(
 ):RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
     inner class ImageViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
-        val propertyName: TextView = itemView.findViewById(R.id.imageName)
-        val imageUrl : ImageView = itemView.findViewById(R.id.ivImage)
+        val propertyName: TextView = itemView.findViewById(com.kejaplus.application.R.id.imageName)
+        val imageUrl : ImageView = itemView.findViewById(com.kejaplus.application.R.id.ivImage)
+        val progressBar: ProgressBar = itemView.findViewById(com.kejaplus.application.R.id.progressBar)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
-        return ImageViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.grid_item_view,parent,false))
+        return ImageViewHolder(LayoutInflater.from(parent.context).inflate(com.kejaplus.application.R.layout.grid_item_view,parent,false))
     }
 
     override fun getItemCount(): Int {
@@ -40,28 +40,29 @@ class ImageAdapter(
     }
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
-       var storageReference = FirebaseStorage.getInstance().getReference("images/")
+        var storageReference = FirebaseStorage.getInstance().getReference("images/")
 
         val propertyItem = propertyList[position]
         val image = propertyItem.image
         storageReference = FirebaseStorage.getInstance().reference.child(image)
         holder.propertyName.text = propertyItem.property_name
-        Glide.with(holder.itemView).load(image).into(holder.imageUrl)
-        val localFile = File.createTempFile("image", "jpg")
+        //Glide.with(holder.itemView).load(image).into(holder.imageUrl)
+        val localFile = File.createTempFile("images", "jpg")
+
         storageReference.getFile(localFile)
             .addOnSuccessListener {
+                holder.progressBar.visibility = View.GONE
                 val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
                 Glide.with(holder.itemView).load(bitmap).dontTransform().into(holder.imageUrl)
-               // activityNoteEditorBinding.iDImageView.setImageBitmap(bitmap)
             }.addOnFailureListener { e ->
+                holder.progressBar.visibility = View.GONE
                 Toast.makeText(context,
                     "Failed " + e.message,
                     Toast.LENGTH_SHORT
-                )
-                    .show()
+                ).show()
             }
+
+        }
+
+
     }
-
-
-
-}
