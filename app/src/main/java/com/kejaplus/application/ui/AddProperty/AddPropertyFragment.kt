@@ -24,7 +24,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kejaplus.application.BuildConfig
 import com.kejaplus.application.R
-import com.kejaplus.application.Support.Communicator
 import com.kejaplus.application.Support.InputValidator
 import com.kejaplus.application.databinding.FragmentAddPropertyBinding
 import com.kejaplus.application.ui.Map.MapsFragment
@@ -69,7 +68,7 @@ class AddPropertyFragment : Fragment() {
         Log.e("Add property fragment", "fragment add property")
 
         //property strings
-        val property = resources.getStringArray(R.array.property_type)
+        val property = resources.getStringArray(R.array.property_category)
         val propertyStringAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item,property)
         addPropertyBinding.propertyAutoCompleteTextView.setAdapter(propertyStringAdapter)
 
@@ -89,26 +88,26 @@ class AddPropertyFragment : Fragment() {
             addPropertyBinding.addButton1.visibility= View.INVISIBLE
             addPropertyBinding.closeButton1.visibility = View.VISIBLE
         })
-        addPropertyBinding.addButton2.setOnClickListener(View.OnClickListener { view -> fileUpload(context)
+        /**addPropertyBinding.addButton2.setOnClickListener(View.OnClickListener { view -> fileUpload(context)
             addPropertyBinding.addButton2.visibility= View.INVISIBLE
             addPropertyBinding.closeButton2.visibility = View.VISIBLE
         })
         addPropertyBinding.addButton3.setOnClickListener(View.OnClickListener { view -> fileUpload(context)
             addPropertyBinding.addButton3.visibility= View.INVISIBLE
             addPropertyBinding.closeButton3.visibility = View.VISIBLE
-        })
-        addPropertyBinding.closeButton1.setOnClickListener(View.OnClickListener { addPropertyBinding.iDImageView.setImageResource(R.drawable.file)
+        })*/
+        addPropertyBinding.closeButton1.setOnClickListener(View.OnClickListener { addPropertyBinding.iDImageView.setImageResource(R.drawable.picture)
             addPropertyBinding.addButton1.visibility= View.VISIBLE
             addPropertyBinding.closeButton1.visibility = View.INVISIBLE
         })
-        addPropertyBinding.closeButton2.setOnClickListener(View.OnClickListener { addPropertyBinding.iDImageView2.setImageResource(R.drawable.file)
+        /**addPropertyBinding.closeButton2.setOnClickListener(View.OnClickListener { addPropertyBinding.iDImageView2.setImageResource(R.drawable.file)
             addPropertyBinding.addButton1.visibility= View.VISIBLE
             addPropertyBinding.closeButton1.visibility = View.INVISIBLE
         })
         addPropertyBinding.closeButton3.setOnClickListener(View.OnClickListener { addPropertyBinding.iDImageView3.setImageResource(R.drawable.file)
             addPropertyBinding.addButton1.visibility= View.VISIBLE
             addPropertyBinding.closeButton1.visibility = View.INVISIBLE
-        })
+        })*/
 
         return addPropertyBinding.root
 

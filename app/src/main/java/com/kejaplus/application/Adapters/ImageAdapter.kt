@@ -14,19 +14,50 @@ import com.bumptech.glide.Glide
 import com.example.kejaplus.Model.SaveProperty
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
-import android.net.Uri
 import android.widget.ProgressBar
+import com.kejaplus.application.interfaces.Communicator
 
 
 class ImageAdapter(
     private val propertyList: ArrayList<SaveProperty>,
-    private val context: Context
+    private val context: Context,
+    private val listener: Communicator
 ):RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
-    inner class ImageViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
+    inner class ImageViewHolder(itemView: View):RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val propertyName: TextView = itemView.findViewById(com.kejaplus.application.R.id.imageName)
-        val imageUrl : ImageView = itemView.findViewById(com.kejaplus.application.R.id.ivImage)
-        val progressBar: ProgressBar = itemView.findViewById(com.kejaplus.application.R.id.progressBar)
+        val imageUrl: ImageView = itemView.findViewById(com.kejaplus.application.R.id.ivImage)
+        val progressBar: ProgressBar =
+            itemView.findViewById(com.kejaplus.application.R.id.progressBar)
+        val view: View = itemView
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            val propertyName = propertyList[adapterPosition].property_name
+            val propertyType = propertyList[adapterPosition].property_type
+            val propertyDesc = propertyList[adapterPosition].property_desc
+            val propertyLocation = propertyList[adapterPosition].location
+            val propertyCondition = propertyList[adapterPosition].condition
+            val propertyCategory = propertyList[adapterPosition].property_category
+            val price = propertyList[adapterPosition].price
+
+            if (position != RecyclerView.NO_POSITION) {
+                listener.passData(
+                    position,
+                    propertyName,
+                    propertyType,
+                    propertyDesc,
+                    propertyLocation,
+                    propertyCondition,
+                    propertyCategory,
+                    price
+                )
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {

@@ -82,6 +82,7 @@ class MapsFragment : Fragment() {
                         }
 
                     }
+
                    }else{
                     mapsBinding.fab.hide()
                     Toast.makeText(activity, "Location Not Found.....", Toast.LENGTH_SHORT).show()

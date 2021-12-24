@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kejaplus.Model.SaveProperty
@@ -18,12 +19,14 @@ import com.google.firebase.storage.StorageReference
 import com.kejaplus.application.Adapters.ImageAdapter
 import com.kejaplus.application.R
 import com.kejaplus.application.databinding.FragmentHomeBinding
+import com.kejaplus.application.interfaces.Communicator
+import com.kejaplus.application.ui.AddProperty.AddPropertyFragmentDirections
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), Communicator {
 
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
@@ -72,7 +75,7 @@ class HomeFragment : Fragment() {
                         _binding?.shimmerFrameLayout?.stopShimmerAnimation()
                         _binding?.shimmerFrameLayout?.visibility = View.GONE
                         _binding?.recyclerview?.visibility = View.VISIBLE
-                        propertyRecyclerView.adapter = ImageAdapter(propertyArrayList,mContext)
+                        propertyRecyclerView.adapter = ImageAdapter(propertyArrayList,mContext,this@HomeFragment)
 
                     }
 
@@ -96,4 +99,18 @@ class HomeFragment : Fragment() {
         _binding?.shimmerFrameLayout?.stopShimmerAnimation()
         super.onPause()
     }
+
+    override fun passData(
+        position: Int,
+        propertyName: String,
+        propertyType: String,
+        propertyDesc: String,
+        propertyLocation: String,
+        propertyCondition: String,
+        propertyCategory:String,
+        price: String
+    ) {
+        val action =  HomeFragmentDirections.actionNavigationHomeToPropertyDetailsFragment(propertyName,propertyType,propertyDesc,propertyCondition,propertyLocation,price,propertyCategory)
+        findNavController().navigate(action)
     }
+}

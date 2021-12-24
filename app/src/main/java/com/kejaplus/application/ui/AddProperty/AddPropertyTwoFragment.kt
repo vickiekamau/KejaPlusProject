@@ -57,6 +57,12 @@ class AddPropertyTwoFragment: Fragment() {
             R.layout.dropdown_item, condition)
         addPropertyTwoFragment.conditionAutoCompleteTextView.setAdapter(conditionStringAdapter)
 
+        //property type string
+        val type = resources.getStringArray(R.array.property_type)
+        val typeStringAdapter = ArrayAdapter(requireContext(),
+            R.layout.dropdown_item, type)
+        addPropertyTwoFragment.propertyTypeAutoCompleteTextView.setAdapter(typeStringAdapter)
+
 
 
         //mProgressDialog = ProgressDialog(this@AddPropertyTwoFragment)
@@ -94,6 +100,7 @@ class AddPropertyTwoFragment: Fragment() {
     private fun inputValidation(property:String, noBedroom: String, location: String, imageUrl: Uri) {
         val validator = InputValidator()
         if(validator.validateRequired(addPropertyTwoFragment.propertyName,addPropertyTwoFragment.propertyNameInput) &&
+            validator.validateRequired(addPropertyTwoFragment.propertyTypeLayout,addPropertyTwoFragment.propertyTypeAutoCompleteTextView)&&
             validator.validateRequired(addPropertyTwoFragment.conditionLayout,addPropertyTwoFragment.conditionAutoCompleteTextView) &&
             validator.validateRequired(addPropertyTwoFragment.priceLayout,addPropertyTwoFragment.priceInput) &&
             validator.validateRequired(addPropertyTwoFragment.contactNumberLayout,addPropertyTwoFragment.contactNumberInput) &&
@@ -101,17 +108,18 @@ class AddPropertyTwoFragment: Fragment() {
 
             // fetch the text in the autocomplete text and edittext
             val propertyName = addPropertyTwoFragment.propertyNameInput.text.toString()
+            val propertyType = addPropertyTwoFragment.propertyTypeAutoCompleteTextView.text.toString()
             val condition =  addPropertyTwoFragment.conditionAutoCompleteTextView.text.toString()
             val price = addPropertyTwoFragment.priceInput.text.toString()
             val contactNo = addPropertyTwoFragment.contactNumberInput.text.toString()
             val propertyDesc = addPropertyTwoFragment.propertyDescriptionInput.text.toString()
 
             //call the save method and parse in the all the fetched data from both fragments
-            saveProperty(property,noBedroom,location,propertyName,condition,price,contactNo,propertyDesc,imageUrl)
+            saveProperty(property,propertyType,noBedroom,location,propertyName,condition,price,contactNo,propertyDesc,imageUrl)
         }
     }
     // Save method that saves the property data to realtime database
-    private fun saveProperty(propertyType: String,noBedroom: String,location: String,propertyName: String,condition:String,
+    private fun saveProperty(propertyCategory: String, propertyType:String,noBedroom: String,location: String,propertyName: String,condition:String,
                              price: String,contactNo:String, propertyDesc: String, imageFilePath: Uri
     ){
         val sweetAlertDialog = SweetAlertDialog(mContext, SweetAlertDialog.PROGRESS_TYPE)
@@ -121,7 +129,7 @@ class AddPropertyTwoFragment: Fragment() {
         databaseReference = FirebaseDatabase.getInstance().getReference("property")
         val propertyId = databaseReference.push().key
 
-        val saveProperty = SaveProperty(propertyId!!,propertyType,noBedroom,location,propertyName,condition,price,contactNo,propertyDesc,imageId)
+        val saveProperty = SaveProperty(propertyId!!,propertyCategory,propertyType,noBedroom,location,propertyName,condition,price,contactNo,propertyDesc,imageId)
 
         sweetAlertDialog.progressHelper.barColor = Color.parseColor("#41c300")
         sweetAlertDialog.titleText = "Loading..."

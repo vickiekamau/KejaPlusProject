@@ -29,7 +29,7 @@
     <string name="property_for_you">Property for You</string>
     <string name="name_logo">Keja Plus</string>
 
-    <string-array name="property_type">
+    <string-array name="property_category">
         <item>Single Family Houses</item>
         <item>Luxury Property</item>
         <item>Vacation Homes</item>
@@ -38,6 +38,10 @@
         <item>Condominiums</item>
         <item>Duplex</item>
         <item>Apartment</item>
+    </string-array>
+    <string-array name="property_type">
+        <item>Rent</item>
+        <item>Purchase Unit</item>
     </string-array>
 
     <string-array name="number_bedroom">
@@ -65,8 +69,8 @@
     <string-array name="condition">
         <item>Excellent</item>
         <item>Good</item>
-        <item>Better</item>
-        <item>Poor</item>
+        <item>New</item>
+        <item>Old</item>
     </string-array>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="submit_location">submit</string>
@@ -78,4 +82,14 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="description">Description</string>
+    <string name="category">Category:</string>
+    <string name="apartment">Apartment</string>
+    <string name="date">Date:</string>
+    <string name="type">Type:</string>
+    <string name="price_shilling">Price: Ksh</string>
+    <string name="condition_title">Condition:</string>
+    <string name="new_condition">New</string>
+    <string name="ksh">Ksh</string>
+    <string name="property_type">Property Type</string>
 </resources>
