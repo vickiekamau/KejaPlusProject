@@ -82,4 +82,16 @@ dependencies {
 
     //load images from firebase ui
     implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
+
+    //androidx room
+    implementation "androidx.room:room-runtime:2.3.0"
+    implementation "androidx.room:room-ktx:2.3.0"
+    kapt "androidx.room:room-compiler:2.3.0"
+
+    //room encrypt
+    implementation "net.zetetic:android-database-sqlcipher:4.4.0"
+
+    //picasso to load images
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

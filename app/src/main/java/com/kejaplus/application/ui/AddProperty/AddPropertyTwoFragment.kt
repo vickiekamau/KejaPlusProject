@@ -29,6 +29,8 @@ import com.kejaplus.application.MainActivity
 import com.kejaplus.application.R
 import com.kejaplus.application.Support.InputValidator
 import com.kejaplus.application.databinding.FragmentAddPropertyTwoBinding
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 
 class AddPropertyTwoFragment: Fragment() {
@@ -128,8 +130,11 @@ class AddPropertyTwoFragment: Fragment() {
 
         databaseReference = FirebaseDatabase.getInstance().getReference("property")
         val propertyId = databaseReference.push().key
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
-        val saveProperty = SaveProperty(propertyId!!,propertyCategory,propertyType,noBedroom,location,propertyName,condition,price,contactNo,propertyDesc,imageId)
+        val currentDateAndTime: String = simpleDateFormat.format(Date())
+
+        val saveProperty = SaveProperty(propertyId!!,propertyCategory,propertyType,noBedroom,location,propertyName,condition,price,contactNo,propertyDesc,imageId,currentDateAndTime)
 
         sweetAlertDialog.progressHelper.barColor = Color.parseColor("#41c300")
         sweetAlertDialog.titleText = "Loading..."

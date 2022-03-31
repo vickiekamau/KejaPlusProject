@@ -16,13 +16,30 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:indeterminate="true"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible"/>
+
+
         <ImageView
             android:id="@+id/propertyImage"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:foregroundTintMode="src_atop"
-            android:scaleType="fitXY"
-            android:src="@drawable/waiguru" />
+            android:scaleType="centerCrop"
+            tools:srcCompat="@drawable/waiguru" />
+
+
 
     </RelativeLayout>
 
@@ -199,8 +216,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/view_padding"
                     android:layout_toRightOf="@id/date_title"
-                    tools:text="December 22, 2021"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    tools:text="December 22, 2021" />
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/rel3"

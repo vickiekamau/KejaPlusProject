@@ -1,39 +1,33 @@
 package com.kejaplus.application.ui.home
 
+import android.R
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kejaplus.Model.SaveProperty
 import com.google.firebase.database.*
-import com.google.firebase.storage.StorageReference
-import com.kejaplus.application.Adapters.ImageAdapter
-import com.kejaplus.application.R
+import com.kejaplus.application.Adapters.PropertyAdapter
 import com.kejaplus.application.databinding.FragmentHomeBinding
 import com.kejaplus.application.interfaces.Communicator
-import com.kejaplus.application.ui.AddProperty.AddPropertyFragmentDirections
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment(), Communicator {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private val homeViewModel: HomeViewModel by viewModels()
     private var _binding: FragmentHomeBinding? = null
     private lateinit var mContext: Context
     private lateinit var databaseReference: DatabaseReference
     private lateinit var propertyRecyclerView: RecyclerView
-    private lateinit var propertyArrayList : ArrayList<SaveProperty>
+
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -44,17 +38,37 @@ class HomeFragment : Fragment(), Communicator {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
         mContext = container!!.context
 
+        //val homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+
+
         propertyRecyclerView = _binding!!.recyclerview
         propertyRecyclerView.layoutManager = GridLayoutManager(mContext,3)
-        propertyArrayList = arrayListOf<SaveProperty>()
+
         _binding?.shimmerFrameLayout?.startShimmerAnimation()
-        getPropertyData()
+
+        //homeViewModel.getPropertyData()
+
+        homeViewModel.allProperties.observe(viewLifecycleOwner){
+            _binding?.shimmerFrameLayout?.stopShimmerAnimation()
+            _binding?.shimmerFrameLayout?.visibility = View.GONE
+            _binding?.recyclerview?.visibility = View.VISIBLE
+            propertyRecyclerView.adapter = PropertyAdapter(it as ArrayList<SaveProperty>,mContext,this@HomeFragment)
+        }
+
+        /**homeViewModel.propertyItems.observe(viewLifecycleOwner){
+
+            _binding?.shimmerFrameLayout?.stopShimmerAnimation()
+            _binding?.shimmerFrameLayout?.visibility = View.GONE
+            _binding?.recyclerview?.visibility = View.VISIBLE
+            propertyRecyclerView.adapter = PropertyAdapter(it as ArrayList<SaveProperty>,mContext,this@HomeFragment)
+        }*/
+
+
 
         return root
     }
@@ -63,32 +77,6 @@ class HomeFragment : Fragment(), Communicator {
         super.onDestroyView()
         _binding = null
     }
-    private fun getPropertyData() {
-            databaseReference = FirebaseDatabase.getInstance().getReference("property")
-            databaseReference.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()){
-                        for (propertySnapshot in snapshot.children){
-                            val property = propertySnapshot.getValue(SaveProperty::class.java)
-                            propertyArrayList.add(property!!)
-                        }
-                        _binding?.shimmerFrameLayout?.stopShimmerAnimation()
-                        _binding?.shimmerFrameLayout?.visibility = View.GONE
-                        _binding?.recyclerview?.visibility = View.VISIBLE
-                        propertyRecyclerView.adapter = ImageAdapter(propertyArrayList,mContext,this@HomeFragment)
-
-                    }
-
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    _binding?.shimmerFrameLayout?.visibility = View.GONE
-                    Toast.makeText(requireActivity().application,error.toString(),Toast.LENGTH_LONG).show()
-                }
-
-            })
-
-        }
 
     override fun onResume() {
         super.onResume()
@@ -108,9 +96,11 @@ class HomeFragment : Fragment(), Communicator {
         propertyLocation: String,
         propertyCondition: String,
         propertyCategory:String,
-        price: String
+        price: String,
+        timeStamp: String,
+        propertyImage: String
     ) {
-        val action =  HomeFragmentDirections.actionNavigationHomeToPropertyDetailsFragment(propertyName,propertyType,propertyDesc,propertyCondition,propertyLocation,price,propertyCategory)
+        val action =  HomeFragmentDirections.actionNavigationHomeToPropertyDetailsFragment(propertyName,propertyType,propertyDesc,propertyCondition,propertyLocation,price,propertyCategory,timeStamp,propertyImage)
         findNavController().navigate(action)
     }
 }

@@ -37,7 +37,7 @@
     <fragment
         android:id="@+id/addPropertyTwoFragment"
         android:name="com.kejaplus.application.ui.AddProperty.AddPropertyTwoFragment"
-        android:label="fragment_add_property_two"
+        android:label="@string/add_property"
         tools:layout="@layout/fragment_add_property_two">
         <argument
             android:name="property_type"
@@ -87,6 +87,12 @@
             app:argType="string" />
         <argument
             android:name="propertyCategory"
+            app:argType="string" />
+        <argument
+            android:name="timeStamp"
+            app:argType="string" />
+        <argument
+            android:name="propertyImage"
             app:argType="string" />
     </fragment>
 

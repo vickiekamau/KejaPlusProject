@@ -16,13 +16,14 @@ import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 import android.widget.ProgressBar
 import com.kejaplus.application.interfaces.Communicator
+import com.squareup.picasso.Picasso
 
 
-class ImageAdapter(
+class PropertyAdapter(
     private val propertyList: ArrayList<SaveProperty>,
     private val context: Context,
     private val listener: Communicator
-):RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
+):RecyclerView.Adapter<PropertyAdapter.ImageViewHolder>() {
 
     inner class ImageViewHolder(itemView: View):RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val propertyName: TextView = itemView.findViewById(com.kejaplus.application.R.id.imageName)
@@ -44,6 +45,8 @@ class ImageAdapter(
             val propertyCondition = propertyList[adapterPosition].condition
             val propertyCategory = propertyList[adapterPosition].property_category
             val price = propertyList[adapterPosition].price
+            val timeStamp = propertyList[adapterPosition].timeStamp
+            val propertyImage = propertyList[adapterPosition].image
 
             if (position != RecyclerView.NO_POSITION) {
                 listener.passData(
@@ -54,7 +57,9 @@ class ImageAdapter(
                     propertyLocation,
                     propertyCondition,
                     propertyCategory,
-                    price
+                    price,
+                    timeStamp,
+                    propertyImage
                 )
             }
         }
@@ -77,21 +82,22 @@ class ImageAdapter(
         val image = propertyItem.image
         storageReference = FirebaseStorage.getInstance().reference.child(image)
         holder.propertyName.text = propertyItem.property_name
-        //Glide.with(holder.itemView).load(image).into(holder.imageUrl)
-        val localFile = File.createTempFile("images", "jpg")
+        Log.i("Image",image)
 
-        storageReference.getFile(localFile)
-            .addOnSuccessListener {
-                holder.progressBar.visibility = View.GONE
-                val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
-                Glide.with(holder.itemView).load(bitmap).dontTransform().into(holder.imageUrl)
-            }.addOnFailureListener { e ->
-                holder.progressBar.visibility = View.GONE
-                Toast.makeText(context,
-                    "Failed " + e.message,
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+        val picasso = Picasso.get()
+
+        storageReference.downloadUrl.addOnSuccessListener { uri -> // Got the download URL for the image
+            holder.progressBar.visibility = View.GONE
+            // Pass it to Picasso to download, show in ImageView and caching
+            picasso.load(uri.toString()).into(holder.imageUrl)
+        }.addOnFailureListener {e ->
+            // Handle any errors
+            holder.progressBar.visibility = View.GONE
+            Toast.makeText(context,
+                "Failed " + e.message,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
 
         }
 

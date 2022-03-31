@@ -13,4 +13,5 @@
     <color name="pressed_bg">#64b7b7b7</color>
     <color name="gray">#424242</color>
     <color name="colorGrey">#dddddd</color>
+    <color name="shimmerColor">#C2C2C2</color>
 </resources>
