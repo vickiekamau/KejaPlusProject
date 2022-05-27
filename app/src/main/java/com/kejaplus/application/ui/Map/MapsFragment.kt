@@ -1,6 +1,9 @@
 package com.kejaplus.application.ui.Map
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
+import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import androidx.fragment.app.Fragment
@@ -12,6 +15,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -122,4 +127,20 @@ class MapsFragment : Fragment() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.google_map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
+
+   /** private fun getLocationPermission() {
+        /*
+         * Request location permission, so that we can get the location of the
+         * device. The result of the permission request is handled by a callback,
+         * onRequestPermissionsResult.
+         */
+        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED) {
+            locationPermissionGranted = true
+        } else {
+            ActivityCompat.requestPermissions(
+                mContext as Activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
+        }
+    }*/
 }

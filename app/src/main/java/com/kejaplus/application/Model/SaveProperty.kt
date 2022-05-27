@@ -49,4 +49,7 @@ interface SavePropertyDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun createAll(objects: List<SaveProperty>)
+
+    @Query("Select * from property where property_name like '%' || :search || '%' ")
+    fun getSearchResult(search:String):LiveData<List<SaveProperty>>
 }

@@ -13,38 +13,9 @@ import net.sqlcipher.database.SupportFactory
 abstract class AppDatabase: RoomDatabase() {
     abstract fun savePropertyDao(): SavePropertyDao
     companion object {
-        private const val name = "kejaplus_db"
+        private const val name = "KejaPlus_database"
 
-        /**init {
-        System.loadLibrary("kejaplus")
-        }*/
 
-        /**private external fun getApiKey(id: Int): String
-
-        @Volatile
-        private var instance: AppDatabase? = null
-
-        fun getDB(context: Context): AppDatabase {
-        if (instance == null) {
-        synchronized(this) {
-        val encryptFactory =
-        SupportFactory(SQLiteDatabase.getBytes(getApiKey(1).toCharArray()))
-
-        instance = Room.databaseBuilder(
-        context.applicationContext, AppDatabase::class.java,
-        name
-        )
-        .openHelperFactory(encryptFactory).fallbackToDestructiveMigration().build()
-        }
-        }
-        return instance!!
-        }
-
-        val db = Room.databaseBuilder(
-        applicationContext,
-        AppDatabase::class.java, "database-name"
-        ).build()
-        }*/
         @Volatile
         private var instance: AppDatabase? = null
         fun getDB(context: Context): AppDatabase {
@@ -52,6 +23,7 @@ abstract class AppDatabase: RoomDatabase() {
                 context.applicationContext, AppDatabase::class.java,
                 name
             ).allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
                 .build()
             return instance!!
         }

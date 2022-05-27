@@ -4,6 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="view_padding">4dp</dimen>
     <dimen name="layout_padding">8dp</dimen>
+    <dimen name="search_padding">20dp</dimen>
     <dimen name="layout_margin">16dp</dimen>
     <dimen name="cardview_elevation">2dp</dimen>
     <dimen name="close_layout">2dp</dimen>

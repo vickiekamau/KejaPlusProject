@@ -3,10 +3,12 @@ package com.kejaplus.application.ui.home
 import android.R
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -19,7 +21,8 @@ import com.kejaplus.application.Adapters.PropertyAdapter
 import com.kejaplus.application.databinding.FragmentHomeBinding
 import com.kejaplus.application.interfaces.Communicator
 
-class HomeFragment : Fragment(), Communicator {
+class HomeFragment : Fragment(), Communicator, SearchView.OnQueryTextListener,
+    androidx.appcompat.widget.SearchView.OnQueryTextListener {
 
     private val homeViewModel: HomeViewModel by viewModels()
     private var _binding: FragmentHomeBinding? = null
@@ -43,7 +46,6 @@ class HomeFragment : Fragment(), Communicator {
         val root: View = binding.root
         mContext = container!!.context
 
-        //val homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
 
         propertyRecyclerView = _binding!!.recyclerview
@@ -53,7 +55,7 @@ class HomeFragment : Fragment(), Communicator {
 
         //homeViewModel.getPropertyData()
 
-        homeViewModel.allProperties.observe(viewLifecycleOwner){
+        homeViewModel.fetchedData.observe(viewLifecycleOwner){
             _binding?.shimmerFrameLayout?.stopShimmerAnimation()
             _binding?.shimmerFrameLayout?.visibility = View.GONE
             _binding?.recyclerview?.visibility = View.VISIBLE
@@ -67,6 +69,10 @@ class HomeFragment : Fragment(), Communicator {
             _binding?.recyclerview?.visibility = View.VISIBLE
             propertyRecyclerView.adapter = PropertyAdapter(it as ArrayList<SaveProperty>,mContext,this@HomeFragment)
         }*/
+
+        // initialize the search view
+        _binding?.searchView?.isSubmitButtonEnabled = true
+        _binding?.searchView?.setOnQueryTextListener(this)
 
 
 
@@ -102,5 +108,23 @@ class HomeFragment : Fragment(), Communicator {
     ) {
         val action =  HomeFragmentDirections.actionNavigationHomeToPropertyDetailsFragment(propertyName,propertyType,propertyDesc,propertyCondition,propertyLocation,price,propertyCategory,timeStamp,propertyImage)
         findNavController().navigate(action)
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+
+        if (query != null) {
+            homeViewModel.search(query.trim())
+            Log.d("search",query.trim())
+        }
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+
+        if (newText != null) {
+            homeViewModel.search(newText.trim())
+            Log.d("search",newText.trim())
+        }
+        return true
     }
 }

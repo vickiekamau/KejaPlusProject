@@ -56,31 +56,24 @@
             android:text="@string/property_for_you"
             android:textColor="#ffff" />
 
-        <EditText
+
+        <androidx.appcompat.widget.SearchView
             android:id="@+id/search_view"
-            android:layout_width="wrap_content"
+            style="@style/SearchViewStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/txt2"
-            android:layout_marginStart="50dp"
+            android:layout_marginStart="@dimen/search_padding"
             android:layout_marginTop="@dimen/layout_padding"
-            android:background="@drawable/search_view_background"
+            android:layout_marginEnd="@dimen/search_padding"
+            android:layout_marginBottom="@dimen/layout_padding"
             android:ems="17"
-            android:paddingStart="20dp"
+            android:paddingStart="10dp"
             android:paddingTop="10dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="10dp"
-            android:text="@string/search_property"
-            android:textColor="#000"
-            android:textSize="15sp" />
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp" />
 
-        <ImageButton
-            android:layout_width="37dp"
-            android:layout_height="37dp"
-            android:layout_below="@id/txt2"
-            android:layout_marginTop="@dimen/layout_padding"
-            android:layout_toEndOf="@id/search_view"
-            android:background="@drawable/search_view_button_layout"
-            android:ems="10" />
+
     </RelativeLayout>
 
 

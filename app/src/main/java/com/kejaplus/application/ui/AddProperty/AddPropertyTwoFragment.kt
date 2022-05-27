@@ -146,12 +146,7 @@ class AddPropertyTwoFragment: Fragment() {
                 val ref: StorageReference = storageReference.child(imageId)
                 ref.putFile(imageFilePath).addOnSuccessListener(OnSuccessListener<Any?> {
 
-                    Toast.makeText(
-                        requireActivity().application,
-                        "Image Uploaded!!",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
+                    Toast.makeText(requireActivity().application, "Image Uploaded!!", Toast.LENGTH_SHORT).show()
                 }).addOnFailureListener(OnFailureListener { e ->
                     sweetAlertDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE)
                     sweetAlertDialog.titleText = "Oops"

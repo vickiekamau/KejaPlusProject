@@ -1,14 +1,13 @@
 package com.kejaplus.application.ui.home
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.util.Log
+import androidx.lifecycle.*
 import com.example.kejaplus.Model.SaveProperty
 import com.kejaplus.Repository.HomeRepository
 import com.kejaplus.application.Model.Property
 import com.kejaplus.application.db.AppDatabase
+import kotlinx.coroutines.Dispatchers
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -18,10 +17,29 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
 
 
-    val allProperties: LiveData<List<SaveProperty>> = db.savePropertyDao().getAll()
 
-    private val _propertyItems = MutableLiveData<List<SaveProperty>>()
-    val propertyItems:LiveData<List<SaveProperty>> = _propertyItems
+
+    val text : MutableLiveData<String> = MutableLiveData()
+    val fetchedData = text.switchMap{
+        liveData(Dispatchers.IO) {
+            if (it==null||it==""){
+                val data = repository.getPropertyData()
+                emitSource(data)
+            }
+            else{
+                val data = repository.searchProperty(it)
+                emitSource(data)
+            }
+        }
+    }
+
+    init {
+        text.value = ""
+    }
+    fun search(searchText:String){
+        text.value = searchText
+        Log.d("searched data",searchText)
+    }
 
     /**fun getPropertyData(){
        //repository.getPropertyData(_propertyItems)

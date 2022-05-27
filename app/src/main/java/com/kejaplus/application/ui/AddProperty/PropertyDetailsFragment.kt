@@ -30,13 +30,13 @@ class PropertyDetailsFragment : Fragment() {
     private lateinit var price: String
     private lateinit var timeStamp: String
     private lateinit var propertyImage: String
-    val picasso = Picasso.get()
 
     val args :PropertyDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         propertyDetailsBinding = FragmentPropertyDetailsBinding.inflate(inflater,container,false)
+
 
         mContext = container!!.context
         return propertyDetailsBinding.root
