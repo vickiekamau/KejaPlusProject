@@ -35,16 +35,16 @@ interface SavePropertyDao {
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg saveProperty: SaveProperty)
+    fun insert(saveProperty: List<SaveProperty>)
 
     @Query("DELETE FROM property")
     fun clearProperty()
 
 
     @Transaction
-    fun syncProperty(vararg saveProperty: SaveProperty) {
+    fun syncProperty(saveProperty: List<SaveProperty>) {
         //clearProperty()
-        insert(*saveProperty)
+        insert(saveProperty)
     }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

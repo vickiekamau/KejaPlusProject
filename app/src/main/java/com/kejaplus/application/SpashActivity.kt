@@ -34,7 +34,12 @@ class SpashActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        if (checkForInternet(this)) {
+        Handler().postDelayed({
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }, 2000) // 300
+        /**if (checkForInternet(this)) {
             // we used the postDelayed(Runnable, time) method
             // to send a message with a delayed time.
             Handler().postDelayed({
@@ -52,7 +57,7 @@ class SpashActivity : AppCompatActivity() {
 
             }
             sweetAlertDialog.setConfirmText("Ok").show()
-        }
+        }*/
 
 
         }
