@@ -74,6 +74,7 @@
     <style name="Theme.KejaPlus.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.KejaPlus.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
         <!-- Gets rid of the search icon -->
         <!--<item name="searchIcon">@null</item> -->
