@@ -78,6 +78,8 @@ class AddPropertyFragment : Fragment() {
         addPropertyBinding.bedroomAutoCompleteTextView.setAdapter(bedroomStringAdapter)
 
         // location Strings
+        addPropertyBinding.locationInput.isEnabled = false
+        addPropertyBinding.locationInput.isFocusable = false
         imageview1Tag = addPropertyBinding.iDImageView.tag.toString()
         addPropertyBinding.locationLayout.setEndIconOnClickListener {
             findNavController().navigate(R.id.mapsFragment)

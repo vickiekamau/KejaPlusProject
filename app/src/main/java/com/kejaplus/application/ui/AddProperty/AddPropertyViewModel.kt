@@ -1,6 +1,7 @@
 package com.kejaplus.application.ui.AddProperty
 
 import android.app.Application
+import android.content.Context
 
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -10,6 +11,7 @@ import com.kejaplus.application.Model.Property
 import com.kejaplus.application.response.Resource
 import kotlinx.coroutines.launch
 import androidx.lifecycle.*
+import com.kejaplus.application.Network.NetworkConnectivity
 
 
 class AddPropertyViewModel(application: Application) : AndroidViewModel(application)  {
@@ -17,7 +19,9 @@ class AddPropertyViewModel(application: Application) : AndroidViewModel(applicat
 
     private val repository = AddPropertyRepository(application)
 
-     private val _insertPropertyStatus = MutableLiveData<Resource<String>>()
+
+
+    private val _insertPropertyStatus = MutableLiveData<Resource<String>>()
 
     val insertPropertyStatus: LiveData<Resource<String>> = _insertPropertyStatus
 
@@ -35,6 +39,12 @@ class AddPropertyViewModel(application: Application) : AndroidViewModel(applicat
             }
         }
     }
+
+    fun netConnectivity(context: Context):Boolean {
+        val networkConnectivity = NetworkConnectivity(context)
+        return networkConnectivity.isOnline()
+    }
+    //
 }
 
 

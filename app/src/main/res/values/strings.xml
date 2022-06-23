@@ -108,4 +108,9 @@
         <item>4</item>
     </string-array>
     <string name="title_activity_settings">SettingsActivity</string>
+
+    <string name="channel_name">Keja Plus</string>
+    <string name="channel_description">Image Uploaded to Server</string>
+    <string name="notification_name">Keja Plus</string>
+    <string name="notification_text">Image Uploaded Successfully</string>
 </resources>

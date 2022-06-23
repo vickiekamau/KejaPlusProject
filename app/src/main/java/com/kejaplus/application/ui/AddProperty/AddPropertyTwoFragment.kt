@@ -94,10 +94,19 @@ class AddPropertyTwoFragment: Fragment() {
         Log.d("location3", locationText)
         Log.d("imageUrl4",imageText)
 
-        addPropertyTwoFragment.submitBtn.setOnClickListener(View.OnClickListener {
-            inputValidation(propertyText,noBedroomText,locationText,uriImage)
+        val ifOnline = viewModel.netConnectivity(mContext)
+        if(ifOnline) {
+            addPropertyTwoFragment.submitBtn.setOnClickListener(View.OnClickListener {
+                inputValidation(propertyText, noBedroomText, locationText, uriImage)
 
-        })
+            })
+        } else {
+            sweetAlertDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE)
+            sweetAlertDialog.titleText = "Oops"
+            sweetAlertDialog.contentText = "Network Error"
+            sweetAlertDialog.setOnDismissListener(null)
+
+        }
 
     }
 
