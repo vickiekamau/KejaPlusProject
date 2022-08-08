@@ -3,30 +3,37 @@ package com.kejaplus.application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Build
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.TypedArrayUtils
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.kejaplus.application.databinding.ActivityMainBinding
-import java.security.AccessController
+import com.kejaplus.application.ui.authentication.SignInActivity
+import com.kejaplus.utils.SweetAlerts
+
 
 class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
+    private lateinit var auth: FirebaseAuth
 
 
     companion object{
@@ -39,9 +46,37 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        auth = FirebaseAuth.getInstance()
+
+        binding.toolbar.inflateMenu(R.menu.top_bar_menu)
+        binding.toolbar.apply {
+            inflateMenu(R.menu.top_bar_menu)
+            setOnMenuItemClickListener {
+                when(it.itemId){
+                    R.id.logout -> {
+                        // User chose the Logout Button
+                        showConfirmation(this@MainActivity,"Logout","Do You Want to Logout","No",confirm = {
+                            //Firebase.auth.signOut()
+                            auth.signOut()
+                            startActivity(Intent(this@MainActivity, SignInActivity::class.java))
+                        })
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+        navController = navHostFragment.navController
         val navView: BottomNavigationView = binding.navView
 
-        navController = findNavController(R.id.nav_host_fragment_activity_main)
+        //Toolbar
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(true)
+
+
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
          appBarConfiguration = AppBarConfiguration(
@@ -49,8 +84,11 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
                 R.id.navigation_home, R.id.navigation_addProperty, R.id.navigation_settings
             )
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+
         navView.setupWithNavController(navController)
+
+        //appBarConfiguration = AppBarConfiguration.Builder(navController.graph).build()
+        setupActionBarWithNavController(navController,appBarConfiguration)
 
         val sharedPreferences = getSharedPreferences("SwitchPreferenceCompat", MODE_PRIVATE)
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
@@ -62,9 +100,39 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
 
 
     }
+
+
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        // Inflate the menu items for use in the action bar
+        val inflater = menuInflater
+        inflater.inflate(R.menu.top_bar_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.logout -> {
+            // User chose the Logout Button
+            showConfirmation(this@MainActivity,"Logout","Do You Want to Logout","No",
+            confirm = {
+                //Firebase.auth.signOut()
+                auth.signOut()
+                startActivity(Intent(this@MainActivity, SignInActivity::class.java))
+            })
+            true
+        }
+
+        else -> {
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            super.onOptionsItemSelected(item)
+        }
+    }
+
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (key == "dark_mode") {
@@ -123,5 +191,15 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
+    }
+
+    private fun showConfirmation(context: Context, title: String, msg: String,cancelT:String, confirm: () -> Unit) {
+        SweetAlerts.confirm(
+            context = context,
+            title = title,
+            msg = msg,
+            cancelText = cancelT,
+            confirm = confirm
+        )
     }
 }

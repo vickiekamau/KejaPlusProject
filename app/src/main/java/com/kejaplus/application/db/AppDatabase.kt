@@ -9,7 +9,7 @@ import com.example.kejaplus.Model.SavePropertyDao
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
 
-@Database(entities = [SaveProperty::class], version = 1, exportSchema = false)
+@Database(entities = [SaveProperty::class], version = 2, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun savePropertyDao(): SavePropertyDao
     companion object {

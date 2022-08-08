@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.AutoCompleteTextView
+import android.widget.EditText
 import android.widget.TextView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -28,8 +29,8 @@ class InputValidator {
 
     val InputValidator = InputValidator().getInstance()*/
 
-    fun validateRequired(text: TextInputEditText): Boolean {
-        return if (fieldNotBlank(text)) {
+    fun validateRequired(text: EditText): Boolean {
+        return if (fieldNotBlank(text as TextInputEditText)) {
             true
         } else {
             setErrorWatcher(text, text)

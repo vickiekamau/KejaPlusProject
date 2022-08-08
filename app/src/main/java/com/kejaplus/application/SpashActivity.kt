@@ -1,7 +1,6 @@
 package com.kejaplus.application
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -9,12 +8,10 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
-import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.ui.AppBarConfiguration
-import cn.pedant.SweetAlert.SweetAlertDialog
 import com.kejaplus.application.databinding.ActivitySpashBinding
+import com.kejaplus.application.ui.authentication.SignInActivity
+import com.kejaplus.application.ui.authentication.SignUpActivity
 
 class SpashActivity : AppCompatActivity() {
 
@@ -35,7 +32,7 @@ class SpashActivity : AppCompatActivity() {
         )
 
         Handler().postDelayed({
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
             finish()
         }, 2000) // 300

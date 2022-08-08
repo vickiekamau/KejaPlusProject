@@ -101,6 +101,8 @@
         <item>Auto Battery Dark Mode</item>
     </string-array>
 
+    <string name="google_Signup">project-403742347559</string>
+
     <string-array name="dark_mode_values">
         <item>1</item>
         <item>2</item>
@@ -113,4 +115,21 @@
     <string name="channel_description">Image Uploaded to Server</string>
     <string name="notification_name">Keja Plus</string>
     <string name="notification_text">Image Uploaded Successfully</string>
+    <string name="welcome_to_kejaplus">Welcome to KejaPlus</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="signup">SignUp</string>
+    <string name="or_sign_up_with">or sign-up with</string>
+    <string name="google">Google</string>
+    <string name="facebook">Facebook</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="log_in">Log in</string>
+    <string name="title_activity_sign_in">SignInActivity</string>
+    <string name="login_btn">Login</string>
+    <string name="login_label">Log In</string>
+    <string name="or_login_with">or Login with</string>
+    <string name="logout">Logout</string>
 </resources>

@@ -26,8 +26,6 @@ class AddPropertyRepository(context: Context)   {
 
 
 
-
-
     fun saveProperty(saveProperty: Property): String{
         storageReference = FirebaseStorage.getInstance().reference
 

@@ -61,7 +61,6 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginBottom="8dp"
-                android:fontFamily="sans-serif-black"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
 
