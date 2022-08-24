@@ -23,7 +23,7 @@ import com.kejaplus.application.Support.InputValidator
 import com.kejaplus.application.databinding.ActivitySignupBinding
 import com.kejaplus.application.response.Status
 import com.kejaplus.application.ui.AddProperty.AddPropertyViewModel
-import com.kejaplus.application.ui.authentication.SignInActivity.Companion.RC_SIGN_IN
+
 import java.util.*
 
 

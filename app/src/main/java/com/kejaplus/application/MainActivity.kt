@@ -1,5 +1,6 @@
 package com.kejaplus.application
 
+import android.app.LauncherActivity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -19,6 +20,9 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
+import com.facebook.login.LoginManager
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -26,9 +30,10 @@ import com.google.firebase.ktx.Firebase
 import com.kejaplus.application.databinding.ActivityMainBinding
 import com.kejaplus.application.ui.authentication.SignInActivity
 import com.kejaplus.utils.SweetAlerts
+import kotlinx.coroutines.NonCancellable.start
 
 
-class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
+class  MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -57,7 +62,11 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
                         // User chose the Logout Button
                         showConfirmation(this@MainActivity,"Logout","Do You Want to Logout","No",confirm = {
                             //Firebase.auth.signOut()
-                            auth.signOut()
+                            GoogleSignIn.getClient(
+                                this@MainActivity,
+                                GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+                            ).signOut()
+                            signOutFromApp()
                             startActivity(Intent(this@MainActivity, SignInActivity::class.java))
                         })
                         true
@@ -120,7 +129,11 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
             showConfirmation(this@MainActivity,"Logout","Do You Want to Logout","No",
             confirm = {
                 //Firebase.auth.signOut()
-                auth.signOut()
+                GoogleSignIn.getClient(
+                    this,
+                    GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+                ).signOut()
+                signOutFromApp()
                 startActivity(Intent(this@MainActivity, SignInActivity::class.java))
             })
             true
@@ -201,5 +214,13 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
             cancelText = cancelT,
             confirm = confirm
         )
+    }
+
+    private fun signOutFromApp() {
+        auth.signOut()
+        //FACEBOOK LOG OUT
+        LoginManager.getInstance().logOut()
+        startActivity(Intent(this, SignInActivity::class.java))
+        finish() //finish settigs view
     }
 }

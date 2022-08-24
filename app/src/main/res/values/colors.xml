@@ -19,4 +19,6 @@
 
     <color name="red_color">@color/red_btn_bg_color</color>
 
+    <color name="facebookBlue">#1778F2</color>
+
 </resources>

@@ -132,4 +132,8 @@
     <string name="login_label">Log In</string>
     <string name="or_login_with">or Login with</string>
     <string name="logout">Logout</string>
+
+    <string name="facebook_app_id">1100666860557271</string>
+    <string name="fb_login_protocol_scheme">fb1100666860557271</string>
+    <string name="facebook_client_token">093138ad7a7f7b6d34710cb4356ad2b9</string>
 </resources>

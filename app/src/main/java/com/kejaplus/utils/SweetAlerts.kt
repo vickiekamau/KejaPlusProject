@@ -74,6 +74,19 @@ object SweetAlerts : SweetsImpl {
         }
     }
 
+    fun loadingNavigation(context: Context, msg: String, dismiss: (() -> Unit)?) {
+        with(getDialog(context, DialogType.LOADING)) {
+            progressHelper.barColor = Color.parseColor("#41c300")
+            titleText = msg
+
+            setOnDismissListener {
+                reset()
+                dismiss?.invoke()
+            }
+            show()
+        }
+    }
+
     override fun error(context: Context, title: String, msg: String, dismiss: (() -> Unit)?) {
         with(getDialog(context, DialogType.ERROR)) {
             titleText = title ?: ""
