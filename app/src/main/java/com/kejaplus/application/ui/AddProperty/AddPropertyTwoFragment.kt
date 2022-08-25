@@ -13,24 +13,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.kejaplus.Model.SaveProperty
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.kejaplus.application.MainActivity
+import com.kejaplus.application.Model.Property
 import com.kejaplus.application.R
 import com.kejaplus.application.Support.InputValidator
 import com.kejaplus.application.databinding.FragmentAddPropertyTwoBinding
+import com.kejaplus.application.response.Status
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
 
 class AddPropertyTwoFragment: Fragment() {
@@ -44,12 +49,16 @@ class AddPropertyTwoFragment: Fragment() {
     private lateinit var firebaseDatabase: FirebaseDatabase
     private lateinit var mProgressDialog: ProgressDialog
     private lateinit var  sweetAlertDialog: SweetAlertDialog
+    private val viewModel: AddPropertyViewModel by viewModels()
     private lateinit var mContext: Context
     val args :AddPropertyTwoFragmentArgs by navArgs()
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         addPropertyTwoFragment = FragmentAddPropertyTwoBinding.inflate(inflater,container,false)
 
         mContext = container!!.context
+
         FirebaseApp.initializeApp(mContext);
         storageReference = FirebaseStorage.getInstance().reference
 
@@ -67,11 +76,6 @@ class AddPropertyTwoFragment: Fragment() {
 
 
 
-        //mProgressDialog = ProgressDialog(this@AddPropertyTwoFragment)
-        //mProgressDialog.setMessage("Please Wait...")
-        //mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
-        //mProgressDialog.setCancelable(false)
-        //mProgressDialog.setCanceledOnTouchOutside(false)
 
         return addPropertyTwoFragment.root
     }
@@ -90,10 +94,19 @@ class AddPropertyTwoFragment: Fragment() {
         Log.d("location3", locationText)
         Log.d("imageUrl4",imageText)
 
-        addPropertyTwoFragment.submitBtn.setOnClickListener(View.OnClickListener {
-            inputValidation(propertyText,noBedroomText,locationText,uriImage)
+        val ifOnline = viewModel.netConnectivity(mContext)
+        if(ifOnline) {
+            addPropertyTwoFragment.submitBtn.setOnClickListener(View.OnClickListener {
+                inputValidation(propertyText, noBedroomText, locationText, uriImage)
 
-        })
+            })
+        } else {
+            sweetAlertDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE)
+            sweetAlertDialog.titleText = "Oops"
+            sweetAlertDialog.contentText = "Network Error"
+            sweetAlertDialog.setOnDismissListener(null)
+
+        }
 
     }
 
@@ -117,60 +130,78 @@ class AddPropertyTwoFragment: Fragment() {
             val propertyDesc = addPropertyTwoFragment.propertyDescriptionInput.text.toString()
 
             //call the save method and parse in the all the fetched data from both fragments
-            saveProperty(property,propertyType,noBedroom,location,propertyName,condition,price,contactNo,propertyDesc,imageUrl)
+            savePropertyData(property,propertyType,noBedroom,location,propertyName,condition,price,contactNo,propertyDesc,imageUrl)
         }
     }
-    // Save method that saves the property data to realtime database
-    private fun saveProperty(propertyCategory: String, propertyType:String,noBedroom: String,location: String,propertyName: String,condition:String,
-                             price: String,contactNo:String, propertyDesc: String, imageFilePath: Uri
-    ){
-        val sweetAlertDialog = SweetAlertDialog(mContext, SweetAlertDialog.PROGRESS_TYPE)
-        val imageId = ("images/"
-                + UUID.randomUUID().toString())
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("property")
-        val propertyId = databaseReference.push().key
-        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+   private fun savePropertyData(propertyCategory: String, propertyType:String,noBedroom: String,location: String,propertyName: String,condition:String,
+                                price: String,contactNo:String, propertyDesc: String, imageFilePath: Uri){
+       val sweetAlertDialog = SweetAlertDialog(mContext, SweetAlertDialog.PROGRESS_TYPE)
+       val imageId = ("images/" + UUID.randomUUID().toString())
+       val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
-        val currentDateAndTime: String = simpleDateFormat.format(Date())
 
-        val saveProperty = SaveProperty(propertyId!!,propertyCategory,propertyType,noBedroom,location,propertyName,condition,price,contactNo,propertyDesc,imageId,currentDateAndTime)
+       val currentDateAndTime: String = simpleDateFormat.format(Date())
+       val saveProperty = Property(propertyCategory,propertyType,noBedroom,location,propertyName,condition,price,contactNo,propertyDesc,imageFilePath,imageId,currentDateAndTime)
 
-        sweetAlertDialog.progressHelper.barColor = Color.parseColor("#41c300")
-        sweetAlertDialog.titleText = "Loading..."
-        sweetAlertDialog.setCancelable(false)
-        sweetAlertDialog.show()
+       viewModel.insertPropertyData(saveProperty)
 
-        databaseReference.child(propertyId).setValue(saveProperty).addOnCompleteListener{task ->
-            if(task.isSuccessful){
-                val ref: StorageReference = storageReference.child(imageId)
-                ref.putFile(imageFilePath).addOnSuccessListener(OnSuccessListener<Any?> {
+       sweetAlertDialog.progressHelper.barColor = Color.parseColor("#41c300")
+       sweetAlertDialog.titleText = "Loading..."
+       sweetAlertDialog.setCancelable(false)
+       sweetAlertDialog.show()
 
-                    Toast.makeText(requireActivity().application, "Image Uploaded!!", Toast.LENGTH_SHORT).show()
-                }).addOnFailureListener(OnFailureListener { e ->
-                    sweetAlertDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE)
-                    sweetAlertDialog.titleText = "Oops"
-                    sweetAlertDialog.contentText = e.message
-                    sweetAlertDialog.setOnDismissListener(null)
-                })
+       viewModel.insertPropertyStatus.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+           when (it.status) {
+               Status.SUCCESS -> {
+                   sweetAlertDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE)
+                   sweetAlertDialog.titleText = "Success"
+                   sweetAlertDialog.contentText = it.message
+                   sweetAlertDialog.setOnDismissListener { dialog: DialogInterface? ->
 
-                sweetAlertDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE)
-                sweetAlertDialog.titleText = "Success"
-                sweetAlertDialog.contentText = "Property Saved Successfully!"
-                sweetAlertDialog.setOnDismissListener { dialog: DialogInterface? ->
-                    startActivity(Intent(mContext, MainActivity::class.java))
+                       addPropertyTwoFragment.propertyNameInput.text?.clear()
+                       addPropertyTwoFragment.propertyTypeAutoCompleteTextView.text?.clear()
+                       addPropertyTwoFragment.conditionAutoCompleteTextView.text?.clear()
+                       addPropertyTwoFragment.priceInput.text?.clear()
+                       addPropertyTwoFragment.contactNumberInput.text?.clear()
+                       addPropertyTwoFragment.propertyDescriptionInput.text?.clear()
 
-                }
-            }
-            else {
-                sweetAlertDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE)
-                sweetAlertDialog.titleText = "Oops"
-                sweetAlertDialog.contentText = "Property not Saved!, Please Retry"
-                sweetAlertDialog.setOnDismissListener(null)
-            }
-        }
 
-    }
+                       startActivity(Intent(mContext, MainActivity::class.java))
+                   }
+
+
+
+               }
+
+               Status.LOADING -> {
+                   sweetAlertDialog.progressHelper.barColor = ContextCompat.getColor(mContext, R.color.backColor)
+                   sweetAlertDialog.titleText = "Loading..."
+                   sweetAlertDialog.setCancelable(true)
+                   sweetAlertDialog.show()
+                   //inputValidation()
+               }
+               Status.ERROR -> {
+                   sweetAlertDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE)
+                   sweetAlertDialog.titleText = "Oops"
+                   sweetAlertDialog.contentText = it.message.toString()
+                   sweetAlertDialog.setOnDismissListener(null)
+
+                   Snackbar.make(
+                       addPropertyTwoFragment.root,
+                       it.message.toString(),
+                       Snackbar.LENGTH_LONG
+                   ).show()
+               }
+
+               else -> {
+
+               }
+           }
+       })
+
+   }
+
 
 
 }

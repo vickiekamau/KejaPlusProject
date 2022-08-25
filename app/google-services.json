@@ -8,41 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:403742347559:android:4b79913ba4af615ce95902",
-        "android_client_info": {
-          "package_name": "com.example.kejaplus"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "403742347559-0mt1v2f8uc3h4r40ql6mheu54cu0hn2g.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDtScfuJAwLJp7bydZrUjllm3Zm9gAJAoU"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "403742347559-0mt1v2f8uc3h4r40ql6mheu54cu0hn2g.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:403742347559:android:b39090b671d4297ce95902",
         "android_client_info": {
           "package_name": "com.kejaplus.application"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "403742347559-7i6pcrunhchrk6po3tkavhj23ij1li78.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kejaplus.application",
+            "certificate_hash": "1612f01144b93652446f19141a7da15d5ecf42ba"
+          }
+        },
         {
           "client_id": "403742347559-0mt1v2f8uc3h4r40ql6mheu54cu0hn2g.apps.googleusercontent.com",
           "client_type": 3

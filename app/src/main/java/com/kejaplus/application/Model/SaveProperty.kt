@@ -6,23 +6,19 @@ import androidx.room.*
 @Entity(tableName = "property")
 class SaveProperty(
     @PrimaryKey
-    @ColumnInfo(name = "id") val id: String,
-    @ColumnInfo(name = "property_category") val property_category:String,
-    @ColumnInfo(name = "property_type") val property_type: String,
-    @ColumnInfo(name = "no_bedroom") val no_bedroom:String,
-    @ColumnInfo(name = "location") val location:String,
-    @ColumnInfo(name = "property_name") val property_name: String,
-    @ColumnInfo(name = "condition") val condition: String,
-    @ColumnInfo(name = "price") val price: String,
-    @ColumnInfo(name = "contact_no") val contact_no: String,
-    @ColumnInfo(name = "property_desc") val property_desc: String,
-    @ColumnInfo(name = "image_url") val image:String,
-    @ColumnInfo(name = "time_stamp") val timeStamp:String
+    @ColumnInfo(name = "id") var id: String = "",
+    @ColumnInfo(name = "property_category") var property_category:String="",
+    @ColumnInfo(name = "property_type") var property_type: String="",
+    @ColumnInfo(name = "no_bedroom") var no_bedroom:String="",
+    @ColumnInfo(name = "location") var location:String="",
+    @ColumnInfo(name = "property_name") var property_name: String="",
+    @ColumnInfo(name = "condition") var condition: String="",
+    @ColumnInfo(name = "price") var price: String="",
+    @ColumnInfo(name = "contact_no") var contact_no: String="",
+    @ColumnInfo(name = "property_desc") var property_desc: String ="",
+    @ColumnInfo(name = "image_url") var image:String="",
+    @ColumnInfo(name = "time_stamp") var timeStamp:String=""
     )
-{
-    constructor() : this(id = "", property_category = "", property_type = "", no_bedroom ="", location = "", property_name ="", condition="", price="", contact_no="", property_desc="", image="", timeStamp = "") // this constructor is an explicit
-    // "empty" constructor, as seen by Java.
-}
 
 @Dao
 interface SavePropertyDao {
