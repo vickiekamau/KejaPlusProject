@@ -43,20 +43,6 @@ class AuthenticationRepository(context: Context) {
         return auth.signInWithCredential(credentials).await()
     }
 
-    /***suspend fun signInWithGoogle(idToken: String): String {
-        val verifier: GoogleIdTokenVerifier = Builder(
-            transport,
-            jsonFactory
-        ) // Specify the CLIENT_ID of the app that accesses the backend:
-            .setAudience(Collections.singletonList(CLIENT_ID)) // Or, if multiple clients access the backend:
-            //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
-            .build()
-
-        GoogleIdToken idToken = verifier.verify(idTokenString);
-        if (idToken != null) {
-            Payload payload = idToken.getPayload();
-
-    }*/
 
 
     fun createUser(users: Users): String {

@@ -1,6 +1,7 @@
 package com.kejaplus.Repository
 
 import android.app.Application
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.net.Uri
 import android.util.Log
@@ -10,11 +11,14 @@ import androidx.work.*
 import com.example.kejaplus.Model.SaveProperty
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.kejaplus.application.Model.Property
 import com.kejaplus.application.Support.PostWorker
 import com.kejaplus.application.db.AppDatabase
+import kotlinx.coroutines.tasks.await
 import java.net.MalformedURLException
 
 class AddPropertyRepository(context: Context)   {
@@ -26,7 +30,7 @@ class AddPropertyRepository(context: Context)   {
 
 
 
-    fun saveProperty(saveProperty: Property): String{
+    /**fun saveProperty(saveProperty: Property): String{
         storageReference = FirebaseStorage.getInstance().reference
 
         databaseReference = FirebaseDatabase.getInstance().getReference("property")
@@ -39,7 +43,7 @@ class AddPropertyRepository(context: Context)   {
         databaseReference.child(propertyId).setValue(sProperty).addOnCompleteListener{task ->
            if(task.isSuccessful){
                Log.d("save success","Save data to DB is successful")
-               val uriImage = UritoString(saveProperty.imagePath)
+               val uriImage = uriToString(saveProperty.imagePath)
                val imageId = saveProperty.imageId
                if (uriImage != null) {
                    uploadImageWorker(mContext,uriImage,imageId)
@@ -51,23 +55,42 @@ class AddPropertyRepository(context: Context)   {
            }
         }
 
-
-        /**val ref: StorageReference = storageReference.child(saveProperty.imageId)
-        ref.putFile(saveProperty.imagePath).addOnSuccessListener(OnSuccessListener<Any?> {
-
-        }).addOnFailureListener(OnFailureListener { e ->
-            return@OnFailureListener
-        })*/
-
-
-
       return propertyId.toString()
+    }*/
+
+    suspend fun addProperty(saveProperty: Property):String{
+        val db = FirebaseFirestore.getInstance()
+        val property = mapOf(
+            "property_category" to saveProperty.property_category,
+            "property_type" to saveProperty.property_type,
+            "no_bedroom" to saveProperty.no_bedroom,
+            "location" to saveProperty.location,
+            "property_name" to saveProperty.property_name,
+            "condition" to saveProperty.condition,
+            "price" to saveProperty.price,
+            "contact_no" to saveProperty.contact_no,
+            "property_desc" to saveProperty.property_desc,
+            "imageId" to saveProperty.imageId,
+            "timeStamp" to saveProperty.timeStamp
+        )
+        val docReference =  db.collection("property").add(property).await()
+        val uriImage = uriToString(saveProperty.imagePath)
+        try{
+            if (uriImage != null) {
+                uploadImageWorker(mContext,uriImage,saveProperty.imageId)
+                Log.d("Worker class","Worker class called")
+              } else {
+                Toast.makeText(mContext,"Image not found",Toast.LENGTH_LONG).show()
+             }
+          } catch(e:Exception){
+               Toast.makeText(mContext,"${e.message}",Toast.LENGTH_LONG).show()
+            }
+
+        return docReference.id
     }
 
     //method that call background worker  and set constrain to Network of type connected
     private fun uploadImageWorker(context: Context, imageUri: String, imageId: String){
-
-
         val constraint = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
@@ -88,7 +111,7 @@ class AddPropertyRepository(context: Context)   {
 
 
 }
-    fun UritoString(uri: Uri?): String? {
+    private fun uriToString(uri: Uri?): String? {
         uri?.let {
             try {
 

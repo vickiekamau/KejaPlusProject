@@ -31,7 +31,8 @@ class AddPropertyViewModel(application: Application) : AndroidViewModel(applicat
         viewModelScope.launch {
             _insertPropertyStatus.postValue(Resource.loading(null))
             try {
-                val data = repository.saveProperty(property)
+                //val data = repository.saveProperty(property)
+                val data = repository.addProperty(property)
                 _insertPropertyStatus.postValue(Resource.success(data, ""))
 
             } catch (exception: Exception) {

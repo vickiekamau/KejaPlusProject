@@ -105,7 +105,7 @@ class PostWorker(context: Context, parameters: WorkerParameters) :
     }
 
     // Custom method to convert string to url
-    fun stringToURI(uriString: String?): Uri? {
+    private fun stringToURI(uriString: String?): Uri? {
         uriString?.let {
             try {
 
