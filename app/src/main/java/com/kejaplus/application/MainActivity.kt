@@ -1,6 +1,5 @@
 package com.kejaplus.application
 
-import android.app.LauncherActivity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -25,12 +24,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.kejaplus.application.databinding.ActivityMainBinding
 import com.kejaplus.application.ui.authentication.SignInActivity
 import com.kejaplus.utils.SweetAlerts
-import kotlinx.coroutines.NonCancellable.start
 
 
 class  MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
@@ -69,6 +65,10 @@ class  MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
                             signOutFromApp()
                             startActivity(Intent(this@MainActivity, SignInActivity::class.java))
                         })
+                        true
+                    }
+                    R.id.notification -> {
+                       navController.navigate(R.id.notification)
                         true
                     }
                     else -> false
@@ -136,6 +136,10 @@ class  MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
                 signOutFromApp()
                 startActivity(Intent(this@MainActivity, SignInActivity::class.java))
             })
+            true
+        }
+        R.id.notification -> {
+            navController.navigate(R.id.notification)
             true
         }
 

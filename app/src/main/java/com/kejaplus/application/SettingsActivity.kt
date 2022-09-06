@@ -2,16 +2,12 @@ package com.kejaplus.application
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.preference.PreferenceManager
 import com.kejaplus.application.databinding.ActivitySettingsBinding
-import com.kejaplus.application.ui.notifications.NotificationsFragment
+import com.kejaplus.application.ui.settings.SettingsFragment
 
 class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -34,7 +30,7 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.settings, NotificationsFragment())
+                .replace(R.id.settings, SettingsFragment())
                 .commit()
 
         }

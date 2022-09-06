@@ -30,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.kejaplus.application.MainActivity
+import com.kejaplus.application.Model.Notification
 import com.kejaplus.application.Model.Property
 import com.kejaplus.application.R
 import com.kejaplus.application.Support.InputValidator
@@ -145,6 +146,15 @@ class AddPropertyTwoFragment: Fragment() {
        val saveProperty = Property(propertyCategory,propertyType,noBedroom,location,propertyName,condition,price,contactNo,propertyDesc,imageFilePath,imageId,currentDateAndTime)
 
        viewModel.insertPropertyData(saveProperty)
+
+
+       val title = "Property Data"
+       val message = "Property Data Saved Successfully"
+
+       val ts: String = simpleDateFormat.format(Date())
+
+       val notification = Notification(0,title,message,ts)
+       viewModel.insertNotification(notification)
 
        sweetAlertDialog.progressHelper.barColor = Color.parseColor("#41c300")
        sweetAlertDialog.titleText = "Loading..."

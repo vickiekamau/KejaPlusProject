@@ -67,9 +67,19 @@
         <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/xml/preference.xml" value="0.2630208333333333" />
         <entry key="..\:/Users/Blackhat/AndroidStudioProjects/KejaPlus2/app/src/main/res/xml/root_preference.xml" value="0.2078804347826087" />
         <entry key="..\:/Users/user/AndroidStudioProjects/KejaPlus2/app/src/main/res/drawable/search_view_background.xml" value="0.1595" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/activity_settings.xml" value="0.18854166666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/activity_sign_in.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/content_sign_in.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/dropdown_item.xml" value="0.18854166666666666" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/file_type_choose.xml" value="0.18854166666666666" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/fragment_add_property.xml" value="0.20989583333333334" />
         <entry key="..\:/Users/user/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/fragment_home.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/fragment_notification.xml" value="0.1875" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/fragment_property_details.xml" value="0.18854166666666666" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/fragment_settings.xml" value="0.18854166666666666" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/KejaPlus2/app/src/main/res/layout/notification_item.xml" value="0.18854166666666666" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/KejaPlus2/app/src/main/res/menu/top_bar_menu.xml" value="0.18854166666666666" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/KejaPlus2/app/src/main/res/xml/preference.xml" value="0.18854166666666666" />
       </map>
     </option>
   </component>

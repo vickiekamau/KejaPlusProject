@@ -48,6 +48,7 @@ class MapsFragment : Fragment() {
          * This is where we can add markers or lines, add listeners or move the camera.
          */
         val kenya = LatLng(0.0236, 37.9062)
+        googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
         googleMap.addMarker(MarkerOptions().position(kenya).title("Kenya"))
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(kenya))
         mapsBinding.searchLocation.isSubmitButtonEnabled = true

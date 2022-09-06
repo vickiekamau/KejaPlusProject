@@ -27,7 +27,6 @@ class HomeFragment : Fragment(), Communicator, SearchView.OnQueryTextListener,
     private val homeViewModel: HomeViewModel by viewModels()
     private var _binding: FragmentHomeBinding? = null
     private lateinit var mContext: Context
-    private lateinit var databaseReference: DatabaseReference
     private lateinit var propertyRecyclerView: RecyclerView
 
 
@@ -56,31 +55,34 @@ class HomeFragment : Fragment(), Communicator, SearchView.OnQueryTextListener,
         val ifOnline = homeViewModel.netConnectivity(mContext)
        if(ifOnline) {
            homeViewModel.fetchData.observe(viewLifecycleOwner) {
-               _binding?.shimmerFrameLayout?.stopShimmerAnimation()
-               _binding?.shimmerFrameLayout?.visibility = View.GONE
-               _binding?.recyclerview?.visibility = View.VISIBLE
-               Log.d("ONLINE DATA ", it.toString())
-               propertyRecyclerView.adapter =
-                   PropertyAdapter(it as ArrayList<SaveProperty>, mContext, this@HomeFragment)
+               if (it.isEmpty()) {
+                   _binding?.shimmerFrameLayout?.startShimmerAnimation()
+                   _binding?.shimmerFrameLayout?.visibility = View.VISIBLE
+               } else {
+
+                   _binding?.shimmerFrameLayout?.stopShimmerAnimation()
+                   _binding?.shimmerFrameLayout?.visibility = View.GONE
+                   _binding?.recyclerview?.visibility = View.VISIBLE
+                   Log.d("ONLINE DATA ", it.toString())
+                   propertyRecyclerView.adapter =
+                       PropertyAdapter(it as ArrayList<SaveProperty>, mContext, this@HomeFragment)
+               }
            }
        }else {
            homeViewModel.fetchOfflineData.observe(viewLifecycleOwner) {
-               _binding?.shimmerFrameLayout?.stopShimmerAnimation()
-               _binding?.shimmerFrameLayout?.visibility = View.GONE
-               _binding?.recyclerview?.visibility = View.VISIBLE
-               Log.d("OFFLINE DATA ", it.toString())
-               propertyRecyclerView.adapter =
-                   PropertyAdapter(it as ArrayList<SaveProperty>, mContext, this@HomeFragment)
+               if (it.isEmpty()) {
+                   binding?.shimmerFrameLayout?.startShimmerAnimation()
+                   _binding?.shimmerFrameLayout?.visibility = View.VISIBLE
+               } else {
+                   _binding?.shimmerFrameLayout?.stopShimmerAnimation()
+                   _binding?.shimmerFrameLayout?.visibility = View.GONE
+                   _binding?.recyclerview?.visibility = View.VISIBLE
+                   Log.d("OFFLINE DATA ", it.toString())
+                   propertyRecyclerView.adapter =
+                       PropertyAdapter(it as ArrayList<SaveProperty>, mContext, this@HomeFragment)
+               }
            }
        }
-
-        /**homeViewModel.propertyItems.observe(viewLifecycleOwner){
-
-            _binding?.shimmerFrameLayout?.stopShimmerAnimation()
-            _binding?.shimmerFrameLayout?.visibility = View.GONE
-            _binding?.recyclerview?.visibility = View.VISIBLE
-            propertyRecyclerView.adapter = PropertyAdapter(it as ArrayList<SaveProperty>,mContext,this@HomeFragment)
-        }*/
 
         // initialize the search view
         _binding?.searchView?.isSubmitButtonEnabled = true

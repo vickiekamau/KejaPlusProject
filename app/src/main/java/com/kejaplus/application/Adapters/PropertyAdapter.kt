@@ -28,8 +28,7 @@ class PropertyAdapter(
     inner class ImageViewHolder(itemView: View):RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val propertyName: TextView = itemView.findViewById(com.kejaplus.application.R.id.imageName)
         val imageUrl: ImageView = itemView.findViewById(com.kejaplus.application.R.id.ivImage)
-        val progressBar: ProgressBar =
-            itemView.findViewById(com.kejaplus.application.R.id.progressBar)
+        val progressBar: ProgressBar = itemView.findViewById(com.kejaplus.application.R.id.progressBar)
         val view: View = itemView
 
         init {

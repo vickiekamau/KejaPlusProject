@@ -2,9 +2,11 @@ package com.example.kejaplus.Model
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.google.firebase.firestore.DocumentId
 
 @Entity(tableName = "property")
 class SaveProperty(
+    @DocumentId
     @PrimaryKey
     @ColumnInfo(name = "id") var id: String = "",
     @ColumnInfo(name = "property_category") var property_category:String="",

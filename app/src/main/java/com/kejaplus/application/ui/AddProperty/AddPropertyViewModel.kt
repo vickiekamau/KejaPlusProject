@@ -11,6 +11,8 @@ import com.kejaplus.application.Model.Property
 import com.kejaplus.application.response.Resource
 import kotlinx.coroutines.launch
 import androidx.lifecycle.*
+import com.kejaplus.Repository.NotificationRepository
+import com.kejaplus.application.Model.Notification
 import com.kejaplus.application.Network.NetworkConnectivity
 
 
@@ -18,8 +20,7 @@ class AddPropertyViewModel(application: Application) : AndroidViewModel(applicat
 
 
     private val repository = AddPropertyRepository(application)
-
-
+    private val notificationRepo = NotificationRepository(application)
 
     private val _insertPropertyStatus = MutableLiveData<Resource<String>>()
 
@@ -39,6 +40,10 @@ class AddPropertyViewModel(application: Application) : AndroidViewModel(applicat
                 _insertPropertyStatus.postValue(Resource.error(null, exception.message!!))
             }
         }
+    }
+
+    fun insertNotification(notification: Notification) {
+            notificationRepo.addNotification(notification)
     }
 
     fun netConnectivity(context: Context):Boolean {

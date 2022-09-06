@@ -13,19 +13,14 @@ import kotlinx.coroutines.Dispatchers
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val db = AppDatabase.getDB(application)
-
     private val repository = HomeRepository(application)
-
-
-
 
 
     val text : MutableLiveData<String> = MutableLiveData()
     val fetchData = text.switchMap{
         liveData(Dispatchers.IO) {
             if (it==null||it==""){
-                val data = repository.getPropertyData()
+                val data = repository.fetchPropertyData()
                 emitSource(data)
             }
             else{
@@ -42,10 +37,12 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         text.value = searchText
         Log.d("searched data",searchText)
     }
+
     fun netConnectivity(context: Context):Boolean {
         val networkConnectivity = NetworkConnectivity(context)
         return networkConnectivity.isOnline()
     }
+
     //val  getOfflineData:LiveData<List<SaveProperty>> =  repository.getOfflineData()
     val fetchOfflineData = text.switchMap {
         liveData(Dispatchers.IO) {

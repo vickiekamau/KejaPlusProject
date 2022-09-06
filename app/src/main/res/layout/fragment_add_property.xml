@@ -172,6 +172,7 @@
             app:layout_constraintTop_toBottomOf="@id/mainLayout"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="@dimen/layout_padding"
+            android:layout_marginBottom="@dimen/layout_padding"
             android:text="@string/next"
             android:textSize="20sp"
             android:textStyle="bold"

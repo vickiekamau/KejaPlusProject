@@ -42,6 +42,7 @@ class PostWorker(context: Context, parameters: WorkerParameters) :
         try {
             //val uriString = inputData.getString("imageUrl")
             //val imageId = inputData.getString("imageId")
+            val titleString = inputData.getString("notification title")
             val imageString = inputData.getStringArray("image Strings")
             val a = imageString?.get(0)
             val b = imageString?.get(1)
@@ -51,10 +52,10 @@ class PostWorker(context: Context, parameters: WorkerParameters) :
 
             // initializing the post remote repository that uploads the image to firebase database
             //postRemoteRepository = PostImageRepository()
-            if (uriImage != null) {
+
                 storageReference = FirebaseStorage.getInstance().reference
                 val ref: StorageReference = storageReference.child(b)
-                ref.putFile(uriImage).addOnSuccessListener(OnSuccessListener<Any?> {
+                ref.putFile(uriImage!!).addOnSuccessListener(OnSuccessListener<Any?> {
 
                     Log.d("download", "success")
                 }).addOnFailureListener(OnFailureListener { e ->
@@ -64,12 +65,8 @@ class PostWorker(context: Context, parameters: WorkerParameters) :
                 Log.d("download", "success")
                 //Return the success with output data
 
-                sendNotification()
+                sendNotification(titleString!!)
                 return Result.success()
-            }
-            else {
-                Log.d("Image not found","Image not Found")
-            }
 
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -82,7 +79,7 @@ class PostWorker(context: Context, parameters: WorkerParameters) :
 
     }
     //function that sends notification after the sync work is done
-    fun sendNotification(){
+    private fun sendNotification(title: String){
         // Create an explicit intent for an Activity in your app
         val intent = Intent(mContext, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -90,9 +87,9 @@ class PostWorker(context: Context, parameters: WorkerParameters) :
         val pendingIntent: PendingIntent = PendingIntent.getActivity(mContext, 0, intent, 0)
 
         val builder = NotificationCompat.Builder(mContext, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_kejapluslogo)
-            .setContentTitle("Keja Plus")
-            .setContentText("Property Image Saved Successfully")
+            .setSmallIcon(R.drawable.ic_notifications)
+            .setContentTitle("KejaPlus")
+            .setContentText(title)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             // Set the intent that will fire when the user taps the notification
             .setContentIntent(pendingIntent)

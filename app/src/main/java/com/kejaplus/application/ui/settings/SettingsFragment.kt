@@ -1,24 +1,17 @@
-package com.kejaplus.application.ui.notifications
+package com.kejaplus.application.ui.settings
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.preference.ListPreference
-import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
 import com.kejaplus.application.R
 import com.kejaplus.application.databinding.FragmentSettingsBinding
 
 
-class NotificationsFragment : PreferenceFragmentCompat(),SharedPreferences.OnSharedPreferenceChangeListener  {
+class SettingsFragment : PreferenceFragmentCompat(),SharedPreferences.OnSharedPreferenceChangeListener  {
 
     private var preferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener? = null
     private lateinit var settingsBinding: FragmentSettingsBinding

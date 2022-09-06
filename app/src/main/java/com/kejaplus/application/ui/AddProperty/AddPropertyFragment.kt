@@ -90,26 +90,11 @@ class AddPropertyFragment : Fragment() {
             addPropertyBinding.addButton1.visibility= View.INVISIBLE
             addPropertyBinding.closeButton1.visibility = View.VISIBLE
         })
-        /**addPropertyBinding.addButton2.setOnClickListener(View.OnClickListener { view -> fileUpload(context)
-            addPropertyBinding.addButton2.visibility= View.INVISIBLE
-            addPropertyBinding.closeButton2.visibility = View.VISIBLE
-        })
-        addPropertyBinding.addButton3.setOnClickListener(View.OnClickListener { view -> fileUpload(context)
-            addPropertyBinding.addButton3.visibility= View.INVISIBLE
-            addPropertyBinding.closeButton3.visibility = View.VISIBLE
-        })*/
+
         addPropertyBinding.closeButton1.setOnClickListener(View.OnClickListener { addPropertyBinding.iDImageView.setImageResource(R.drawable.picture)
             addPropertyBinding.addButton1.visibility= View.VISIBLE
             addPropertyBinding.closeButton1.visibility = View.INVISIBLE
         })
-        /**addPropertyBinding.closeButton2.setOnClickListener(View.OnClickListener { addPropertyBinding.iDImageView2.setImageResource(R.drawable.file)
-            addPropertyBinding.addButton1.visibility= View.VISIBLE
-            addPropertyBinding.closeButton1.visibility = View.INVISIBLE
-        })
-        addPropertyBinding.closeButton3.setOnClickListener(View.OnClickListener { addPropertyBinding.iDImageView3.setImageResource(R.drawable.file)
-            addPropertyBinding.addButton1.visibility= View.VISIBLE
-            addPropertyBinding.closeButton1.visibility = View.INVISIBLE
-        })*/
 
         return addPropertyBinding.root
 

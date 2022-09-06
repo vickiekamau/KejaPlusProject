@@ -5,42 +5,38 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.kejaplus.Model.SaveProperty
 import com.google.firebase.database.*
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.kejaplus.application.Model.FetchDataResponse
+import com.kejaplus.application.Support.Constants.PRODUCTS_REF
 import com.kejaplus.application.db.AppDatabase
+import kotlinx.coroutines.tasks.await
 
-class HomeRepository(application: Application)  {
-    private lateinit var databaseReference: DatabaseReference
-    private lateinit var propertyArrayList :List<SaveProperty>
+class HomeRepository(application: Application,
+                     private val rootRef: FirebaseFirestore = FirebaseFirestore.getInstance(),
+                     private val productRef: CollectionReference = rootRef.collection(PRODUCTS_REF)
+)  {
     private val db: AppDatabase = AppDatabase. getDB(application)
 
 
-    fun getPropertyData(): LiveData<List<SaveProperty>> {
-        val databaseReference: DatabaseReference =
-            FirebaseDatabase.getInstance().getReference("property")
 
 
-        databaseReference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val propertyItems: List<SaveProperty> = snapshot.children.map { dataSnapshot ->
-                    dataSnapshot.getValue(SaveProperty::class.java)!!
-                }
-                //list.postValue(propertyItems)
-                val savePropertyDao = db.savePropertyDao()
+    suspend fun fetchPropertyData(): LiveData<List<SaveProperty>>{
 
-                try{
-                    savePropertyDao.clearProperty()
-                    savePropertyDao.syncProperty(propertyItems)
-                    Log.i("results", propertyItems.toString())
-                }catch (e:Exception){
-                    Log.d("Exception", e.message.toString())
-                }
+       val response = FetchDataResponse()
+       val savePropertyDao = db.savePropertyDao()
+
+        try {
+            response.property = productRef.get().await().documents.mapNotNull { snapShot ->
+                snapShot.toObject(SaveProperty::class.java)
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                //Toast.makeText(.application,error.toString(), Toast.LENGTH_LONG).show()
-            }
-        })
+            savePropertyDao.clearProperty()
+            savePropertyDao.syncProperty(response.property!!)
+            Log.i("results", response.property!!.toString())
+        } catch (exception: Exception) {
+            response.exception = exception
+        }
         return db.savePropertyDao().getAll()
-
     }
 
     fun getOfflineData(): LiveData<List<SaveProperty>>{
