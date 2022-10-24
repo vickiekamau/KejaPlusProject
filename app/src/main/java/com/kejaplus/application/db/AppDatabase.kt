@@ -11,7 +11,7 @@ import com.kejaplus.application.Model.NotificationDao
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
 
-@Database(entities = [SaveProperty::class,Notification::class], version = 3, exportSchema = false)
+@Database(entities = [SaveProperty::class,Notification::class], version = 4, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun savePropertyDao(): SavePropertyDao
     abstract fun notificationDao(): NotificationDao

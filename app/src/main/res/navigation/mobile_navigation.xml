@@ -16,6 +16,10 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_notifications"
             app:destination="@id/navigation_settings" />
+
+        <action
+            android:id="@+id/action_navigation_home_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
@@ -103,8 +107,17 @@
             app:argType="string" />
     </fragment>
     <fragment
-        android:id="@+id/notification"
+        android:id="@+id/notificationFragment"
         android:name="com.kejaplus.application.ui.notification.NotificationFragment"
         android:label="Notifications" />
+
+    <action
+        android:id="@+id/action_to_notifications"
+        app:destination="@+id/notificationFragment" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.kejaplus.application.ui.settings.SettingsFragment"
+        android:label="SettingsFragment" />
 
 </navigation>

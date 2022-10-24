@@ -1,39 +1,42 @@
 package com.kejaplus.application.ui.authentication
 
+import android.app.Activity
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
 import androidx.navigation.ui.AppBarConfiguration
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.material.snackbar.Snackbar
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.kejaplus.application.MainActivity
+import com.google.firebase.auth.GoogleAuthProvider
 import com.kejaplus.application.R
 import com.kejaplus.application.Support.InputValidator
 import com.kejaplus.application.databinding.ActivitySignupBinding
 import com.kejaplus.application.response.Status
-import com.kejaplus.application.ui.AddProperty.AddPropertyViewModel
+import com.kejaplus.application.ui.mainui.MainActivity
+import com.kejaplus.utils.SweetAlerts
+import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 import java.util.*
 
-
+@AndroidEntryPoint
 class SignUpActivity : AppCompatActivity() {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivitySignupBinding
     private lateinit var  sweetAlertDialog: SweetAlertDialog
-    private lateinit var authStateListener: FirebaseAuth.AuthStateListener
-    private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private val viewModel: SignUpViewModel by viewModels()
 
@@ -50,7 +53,9 @@ class SignUpActivity : AppCompatActivity() {
 
         binding.topContent.loginInTextBtn.setOnClickListener(View.OnClickListener { view -> navigate() })
 
-        binding.topContent.signUpGoogle.setOnClickListener { View.OnClickListener { View-> signIn() } }
+        binding.topContent.signUpGoogle.setOnClickListener (View.OnClickListener { view-> signUpGLauncher() })
+
+        signUpGoogle()
     }
 
     private fun inputValidation() {
@@ -133,23 +138,120 @@ class SignUpActivity : AppCompatActivity() {
     }
     private fun signUpGoogle() {
         val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(com.kejaplus.application.R.string.default_web_client_id))
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
     }
 
-    private fun signIn() {
+    private fun signUpGLauncher() {
         val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
+        launcher.launch(signInIntent)
+        Timber.e("GOOGLE SIGN UP")
     }
 
-    companion object {
-        const val RC_SIGN_IN = 1001
-        const val EXTRA_NAME = "EXTRA NAME"
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                Timber.e("launcher ${task.toString()}")
+                handleResult(task)
+            }
+            else {
+                //val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                //handleResult(task)
+                Timber.e("launcher error  ${Activity.RESULT_OK.toString()}")
+            }
+
+        }
+
+
+
+
+    private fun handleResult(task: Task<GoogleSignInAccount>) {
+        if (task.isSuccessful) {
+            val account: GoogleSignInAccount? = task.result
+            if (account != null) {
+                updateUI(account)
+                Timber.e("MainActivity ${account.email.toString()}")
+
+            }
+        } else {
+            error(this, "Ooops", task.exception.toString(),
+                dismiss = { sweetAlertDialog.dismiss() }
+            )
+            Timber.e("Error ${task.exception.toString()}")
+        }
     }
 
+    private fun updateUI(account: GoogleSignInAccount) {
+        val credentials = GoogleAuthProvider.getCredential(account.idToken, null)
+        viewModel.signUpWithGoogle(credentials)
+
+        viewModel.signUpGoogleStatus.observe(this, androidx.lifecycle.Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    success(
+                        this, "Success", "Welcome ${it.data}",
+                        dismiss = {
+                            navigateMain()
+                        }
+                    )
+                }
+
+                Status.LOADING -> {
+                    loading(this, "Loading")
+                    //navigateMain()
+                    //inputValidation()
+                }
+                Status.ERROR -> {
+                    error(this, "Ooops", it.message.toString(),
+                        dismiss = { sweetAlertDialog.dismiss() }
+                    )
+                }
+
+                else -> {
+
+                }
+            }
+        })
+
+
+    }
+
+
+    private fun success(context: Context, title: String, msg: String, dismiss: (() -> Unit)) {
+        SweetAlerts.success(
+            context = context,
+            title = title,
+            msg = msg,
+            dismiss = dismiss
+        )
+    }
+
+    private fun error(context: Context, title: String, msg: String, dismiss: (() -> Unit)) {
+        SweetAlerts.error(
+            context = context,
+            title = title,
+            msg = msg,
+            dismiss = dismiss
+        )
+    }
+
+    private fun loading(context: Context, msg: String) {
+
+        SweetAlerts.loading(
+            context = context,
+            msg = msg
+        )
+    }
+
+    private fun navigateMain() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 
 }
 

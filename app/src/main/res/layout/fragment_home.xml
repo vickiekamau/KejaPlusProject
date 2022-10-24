@@ -57,21 +57,30 @@
             android:textColor="#ffff" />
 
 
-        <androidx.appcompat.widget.SearchView
+        <SearchView
             android:id="@+id/search_view"
-            style="@style/SearchViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/txt2"
             android:layout_marginStart="@dimen/search_padding"
             android:layout_marginTop="@dimen/layout_padding"
-            android:layout_marginEnd="@dimen/search_padding"
+            android:layout_marginEnd="@dimen/search_padding_end"
             android:layout_marginBottom="@dimen/layout_padding"
+            android:paddingEnd="@dimen/layout_margin"
             android:ems="17"
-            android:paddingStart="10dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="10dp" />
+            android:iconifiedByDefault="false"
+            android:background="@drawable/search_view_background"
+            android:queryBackground="@android:color/transparent"/>
+
+        <ImageView
+            android:id="@+id/filter_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt2"
+            android:layout_toEndOf="@id/search_view"
+            android:background="@drawable/ic_filter_list"
+            android:layout_marginTop="@dimen/search_padding"
+            android:contentDescription="filter list" />
 
 
     </RelativeLayout>

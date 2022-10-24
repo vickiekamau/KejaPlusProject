@@ -19,10 +19,14 @@
 
     <color name="red_color">@color/red_btn_bg_color</color>
 
-    <color name="facebookBlue">#1778F2</color>
+    <color name="google_red_color">#DB4437</color>
+
+    <color name="facebookBlue">#4267B2</color>
     <color name="greybackground">#d6d6d6</color>
     <color name="grey">#ff37474f</color>
     <color name="invisible">#003f51b5</color>
     <color name="text">#2b2b2b</color>
+
+    <color name="splash_background">#96222f3e</color>
 
 </resources>

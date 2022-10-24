@@ -16,11 +16,37 @@ class NotificationViewModel(application: Application) : AndroidViewModel(applica
 
     private val repository = NotificationRepository(application)
 
+    val notifications = repository.notifications
+
     private val _fetchNotificationStatus = MutableLiveData<Resource<List<Notification>>>()
 
     private val fetchNotificationStatus: LiveData<Resource<List<Notification>>> = _fetchNotificationStatus
 
     val  fetchNotifications : List<Notification> = repository.getNotification()
+
+    fun clearAll() {
+        viewModelScope.launch {
+            repository.clearAllNotifications()
+        }
+    }
+
+    fun markAllAsRead() {
+        viewModelScope.launch {
+            repository.markAllNotificationsAsRead()
+        }
+    }
+
+    fun markAsRead(vararg notification: Notification) {
+        viewModelScope.launch {
+            repository.readNotification(*notification)
+        }
+    }
+
+    fun delete(vararg notification: Notification) {
+        viewModelScope.launch {
+            repository.deleteNotifications(*notification)
+        }
+    }
 
 
 }

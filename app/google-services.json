@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "403742347559-7i6pcrunhchrk6po3tkavhj23ij1li78.apps.googleusercontent.com",
+          "client_id": "403742347559-cpucq39s936vugn43ak49555kv4nhjd6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.kejaplus.application",
-            "certificate_hash": "1612f01144b93652446f19141a7da15d5ecf42ba"
+            "certificate_hash": "4b446f07cb4d450cdee780af9f85af4af56033d8"
           }
         },
         {

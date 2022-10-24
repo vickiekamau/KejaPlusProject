@@ -121,8 +121,8 @@
         android:layout_height="?actionBarSize"
         app:layout_constraintTop_toBottomOf="@id/passwordLayout"
         android:layout_marginTop="16dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="20dp"
         android:text="@string/login_btn"
         android:textSize="16sp"
@@ -164,29 +164,31 @@
         android:layout_marginEnd="20dp"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/sign_up_google"
-        style="@style/btn_login"
+        android:id="@+id/sign_in_google"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="16dp"
         android:text="@string/google"
+        style="@style/google_signIn_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/line_1"
-        app:icon="@drawable/ic_google">
+        app:icon="@drawable/ic_google"
+        app:backgroundTint="@color/google_red_color">
     </com.google.android.material.button.MaterialButton>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/sign_up_facebook"
-        style="@style/btn_login"
+        android:id="@+id/sign_in_facebook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        style="@style/facebook_btn"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginTop="16dp"
         android:text="@string/facebook"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/line_1"
-        app:icon="@drawable/ic_facebook">
+        app:icon="@drawable/ic_facebook"
+        app:backgroundTint="@color/facebookBlue">
     </com.google.android.material.button.MaterialButton>
 
     <TextView
@@ -198,7 +200,7 @@
         android:layout_marginStart="80dp"
         android:text="@string/already_have_an_account"
         android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/sign_up_google"/>
+        app:layout_constraintTop_toBottomOf="@id/sign_in_google"/>
     <TextView
         android:id="@+id/signUpTextBtn"
         android:layout_width="wrap_content"
@@ -209,7 +211,7 @@
         android:text="@string/signup"
         android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/sign_up_google"/>
+        app:layout_constraintTop_toBottomOf="@id/sign_in_google"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

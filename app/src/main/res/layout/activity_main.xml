@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textAllCaps="true"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+                android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 

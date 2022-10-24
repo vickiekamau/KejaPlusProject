@@ -1,35 +1,33 @@
 package com.kejaplus.application.ui.AddProperty
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import cn.pedant.SweetAlert.SweetAlertDialog
-import com.example.kejaplus.Model.SaveProperty
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.kejaplus.application.MainActivity
+import com.kejaplus.application.ui.mainui.MainActivity
 import com.kejaplus.application.Model.Notification
 import com.kejaplus.application.Model.Property
 import com.kejaplus.application.R
@@ -76,7 +74,7 @@ class AddPropertyTwoFragment: Fragment() {
         addPropertyTwoFragment.propertyTypeAutoCompleteTextView.setAdapter(typeStringAdapter)
 
 
-
+       createNotificationChannel()
 
         return addPropertyTwoFragment.root
     }
@@ -211,6 +209,22 @@ class AddPropertyTwoFragment: Fragment() {
        })
 
    }
+    private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.channel_name)
+            val descriptionText = getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(MainActivity.CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
 
 
 

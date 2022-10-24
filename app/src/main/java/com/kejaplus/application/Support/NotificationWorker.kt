@@ -8,10 +8,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import com.kejaplus.Repository.PostImageRepository
-import com.kejaplus.application.MainActivity
+import com.kejaplus.application.ui.mainui.MainActivity
 import com.kejaplus.application.R
 import java.io.IOException
 

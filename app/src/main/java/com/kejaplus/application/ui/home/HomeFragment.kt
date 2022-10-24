@@ -125,7 +125,7 @@ class HomeFragment : Fragment(), Communicator, SearchView.OnQueryTextListener,
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-
+          binding.searchView.clearFocus()
         if (query != null) {
             homeViewModel.search(query.trim())
             Log.d("search",query.trim())

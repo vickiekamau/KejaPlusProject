@@ -5,6 +5,7 @@ plugins {
     id 'androidx.navigation.safeargs'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
     id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 
 }
 
@@ -13,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.kejaplus.application"
-        minSdk 19
+        minSdk 21
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -94,6 +95,7 @@ dependencies {
     implementation "androidx.room:room-runtime:2.4.3"
     implementation "androidx.room:room-ktx:2.4.3"
     kapt "androidx.room:room-compiler:2.4.3"
+    implementation 'androidx.room:room-paging:2.4.2'
 
     //room encrypt
     implementation "net.zetetic:android-database-sqlcipher:4.5.0"
@@ -110,6 +112,10 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
 
+    //dagger hilt
+    implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
+
     implementation 'androidx.lifecycle:lifecycle-process:2.4.1'
     implementation 'androidx.lifecycle:lifecycle-service:2.4.1'
     //noinspection LifecycleAnnotationProcessorWithJava8
@@ -123,6 +129,17 @@ dependencies {
 
    //Facebook
     implementation 'com.facebook.android:facebook-android-sdk:12.1.0'
+
+
+
+    //pagging
+    implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
+
+    //Splash Screen
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
+
+    //timber
+    implementation 'com.jakewharton.timber:timber:5.0.1'
 
 
 

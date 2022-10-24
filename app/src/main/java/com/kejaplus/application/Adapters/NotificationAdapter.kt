@@ -5,20 +5,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
-import androidx.recyclerview.widget.ListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.FirebaseStorage
 import com.kejaplus.application.Model.Notification
 import com.kejaplus.application.R
 import com.kejaplus.application.databinding.NotificationItemBinding
-import com.squareup.picasso.Picasso
+
 
 class NotificationAdapter :
-    ListAdapter<Notification, NotificationAdapter.NotificationViewHolder>(Notification.COMPARATOR) {
+    //ListAdapter<Notification, NotificationAdapter.NotificationViewHolder>(Notification.COMPARATOR)
+    PagingDataAdapter<Notification, NotificationAdapter.NotificationViewHolder>(Notification.COMPARATOR){
 
     inner class NotificationViewHolder(
         val binding: NotificationItemBinding

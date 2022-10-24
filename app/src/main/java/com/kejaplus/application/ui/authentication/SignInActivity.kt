@@ -7,11 +7,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.ui.AppBarConfiguration
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.facebook.*
@@ -26,18 +25,17 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.kejaplus.application.MainActivity
+import com.kejaplus.application.ui.mainui.MainActivity
 import com.kejaplus.application.R
 import com.kejaplus.application.Support.InputValidator
 import com.kejaplus.application.databinding.ActivitySignInBinding
 import com.kejaplus.application.response.Status
 import com.kejaplus.utils.SweetAlerts
-import kotlinx.coroutines.tasks.await
-import org.json.JSONObject
+import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import java.util.*
-import kotlin.collections.ArrayList
 
-
+@AndroidEntryPoint
 class SignInActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -66,7 +64,6 @@ class SignInActivity : AppCompatActivity() {
 
 
 
-
         // initializing the sweet alert dialog
         sweetAlertDialog = SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE)
 
@@ -76,10 +73,10 @@ class SignInActivity : AppCompatActivity() {
         // navigate to sign up text
         binding.topContent.signUpTextBtn.setOnClickListener(View.OnClickListener { view -> navigate() })
 
-        binding.topContent.signUpGoogle.setOnClickListener(View.OnClickListener { view -> signInGoogle() })
+        binding.topContent.signInGoogle.setOnClickListener(View.OnClickListener { view -> signInGoogle() })
 
         // facebook button
-        binding.topContent.signUpFacebook.setOnClickListener(View.OnClickListener { view -> facebookSignIn() })
+        binding.topContent.signInFacebook.setOnClickListener(View.OnClickListener { view -> facebookSignIn() })
 
         signUpGoogle()
 
@@ -105,7 +102,7 @@ class SignInActivity : AppCompatActivity() {
                 }
 
                 override fun onSuccess(result: LoginResult?) {
-                    Log.d("TAG", "Success Login")
+                    Timber.d("TAG {Success Login}")
 
                      getUserProfile(result?.accessToken, result?.accessToken?.userId)
 
@@ -165,10 +162,7 @@ class SignInActivity : AppCompatActivity() {
                             binding.topContent.passwordText.text?.clear()
                             navigateMain()
                         })
-
-
                 }
-
                 Status.LOADING -> {
                     loading(this, "Loading")
                     //inputValidation()
@@ -195,12 +189,14 @@ class SignInActivity : AppCompatActivity() {
             .requestEmail()
             .build()
 
+
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
     }
 
     private fun signInGoogle() {
         val signInIntent = googleSignInClient.signInIntent
         launcher.launch(signInIntent)
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -212,9 +208,13 @@ class SignInActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-                Log.e("launcher", task.toString())
-
+                Timber.e("launcher ${task.toString()}")
                 handleResult(task)
+            }
+            else {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                handleResult(task)
+                Timber.e("launcher error  ${Activity.RESULT_OK.toString()}")
             }
 
         }
@@ -227,12 +227,14 @@ class SignInActivity : AppCompatActivity() {
             val account: GoogleSignInAccount? = task.result
             if (account != null) {
                 updateUI(account)
-                Log.e("MainActivity", account.email.toString())
+                Timber.e("MainActivity ${account.email.toString()}")
+
             }
         } else {
             error(this, "Ooops", task.exception.toString(),
                 dismiss = { sweetAlertDialog.dismiss() }
             )
+            Timber.e("Error ${task.exception.toString()}")
         }
     }
 
@@ -275,9 +277,12 @@ class SignInActivity : AppCompatActivity() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
+        checkGoogleAuthenticated()
+
         if (currentUser != null) {
             val user = currentUser.email
-            Log.d("Current User Email", user.toString())
+            Timber.d("Current User Email", user.toString())
+
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
@@ -329,10 +334,10 @@ class SignInActivity : AppCompatActivity() {
                 // Facebook Name
                 if (jsonObject.has("name")) {
                     val facebookName = jsonObject.getString("name")
-                    Log.i("Facebook Name: ", facebookName)
+                    Timber.i("Facebook Name: ", facebookName)
                     name = facebookName
                 } else {
-                    Log.i("Facebook Name: ", "Not exists")
+                    Timber.i("Facebook Name: ", "Not exists")
                 }
 
 
@@ -340,10 +345,10 @@ class SignInActivity : AppCompatActivity() {
                 // Facebook Email
                 if (jsonObject.has("email")) {
                     val facebookEmail = jsonObject.getString("email")
-                    Log.i("Facebook Email: ", facebookEmail)
+                    Timber.i("Facebook Email: ", facebookEmail)
                     email = facebookEmail
                 } else {
-                    Log.i("Facebook Email: ", "Not exists")
+                    Timber.i("Facebook Email: ", "Not exists")
                 }
 
             loading(
@@ -377,6 +382,13 @@ class SignInActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun checkGoogleAuthenticated(){
+        if(GoogleSignIn.getLastSignedInAccount(this)!=null){
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
     }
 }
 

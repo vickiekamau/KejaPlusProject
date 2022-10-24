@@ -1,18 +1,19 @@
-
-<PreferenceScreen
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
 <PreferenceCategory
+    app:iconSpaceReserved="true"
     app:title="Display">
 
     <ListPreference
-        app:defaultValue="@string/dark_mode_def_value"
+        android:defaultValue="@string/system_theme"
+        android:key="@string/pref_theme_key"
+        app:entries="@array/pref_theme_entries"
         app:icon="@drawable/ic_theme"
-        app:entries="@array/dark_mode_entries"
-        app:entryValues="@array/dark_mode_values"
-        app:key="dark_mode"
+        app:entryValues="@array/pref_theme_entries"
+        app:summary="@string/system_theme"
         app:title="Theme"
-        app:useSimpleSummaryProvider="true" />
+       />
 </PreferenceCategory>
 
 </PreferenceScreen>

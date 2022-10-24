@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="?actionBarSize"
+
     app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
 
@@ -72,7 +73,7 @@
         app:boxCornerRadiusBottomStart="@dimen/layout_padding"
         app:boxCornerRadiusTopEnd="@dimen/layout_padding"
         app:boxCornerRadiusBottomEnd="@dimen/layout_padding"
-        android:layout_marginTop="@dimen/layout_padding"
+        android:layout_marginTop="@dimen/layout_top"
         android:layout_marginStart="@dimen/activity_vertical_margin"
         android:layout_marginEnd="@dimen/activity_vertical_margin"
         app:startIconDrawable="@drawable/ic_user"
@@ -96,7 +97,7 @@
         app:boxCornerRadiusBottomStart="@dimen/layout_padding"
         app:boxCornerRadiusTopEnd="@dimen/layout_padding"
         app:boxCornerRadiusBottomEnd="@dimen/layout_padding"
-        android:layout_marginTop="@dimen/layout_padding"
+        android:layout_marginTop="@dimen/layout_top"
         android:layout_marginStart="@dimen/activity_vertical_margin"
         android:layout_marginEnd="@dimen/activity_vertical_margin"
         app:startIconDrawable="@drawable/ic_email"
@@ -119,7 +120,7 @@
         app:boxCornerRadiusBottomStart="@dimen/layout_padding"
         app:boxCornerRadiusTopEnd="@dimen/layout_padding"
         app:boxCornerRadiusBottomEnd="@dimen/layout_padding"
-        android:layout_marginTop="@dimen/layout_padding"
+        android:layout_marginTop="@dimen/layout_top"
         android:layout_marginStart="@dimen/activity_vertical_margin"
         android:layout_marginEnd="@dimen/activity_vertical_margin"
         app:startIconDrawable="@drawable/ic_password"
@@ -142,9 +143,9 @@
         style="@style/btn_login"
         android:layout_height="?actionBarSize"
         app:layout_constraintTop_toBottomOf="@id/passwordLayout"
-        android:layout_marginTop="@dimen/layout_padding"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="@dimen/layout_top"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="20dp"
         android:text="@string/signup"
         android:textSize="16sp"
@@ -187,29 +188,32 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/sign_up_google"
-        style="@style/btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/layout_margin"
-        android:layout_marginTop="@dimen/layout_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="16dp"
         android:text="@string/google"
+        style="@style/google_signIn_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/line_1"
-        app:icon="@drawable/ic_google">
+        app:icon="@drawable/ic_google"
+        app:backgroundTint="@color/google_red_color">
     </com.google.android.material.button.MaterialButton>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/sign_up_facebook"
-        style="@style/btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/layout_margin"
-        android:layout_marginTop="@dimen/layout_margin"
+        style="@style/facebook_btn"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="16dp"
         android:text="@string/facebook"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/line_1"
-        app:icon="@drawable/ic_facebook">
+        app:icon="@drawable/ic_facebook"
+        app:backgroundTint="@color/facebookBlue">
     </com.google.android.material.button.MaterialButton>
+
 
     <TextView
         android:id="@+id/signinText"
@@ -220,8 +224,7 @@
         android:layout_marginStart="80dp"
         android:text="@string/already_have_an_account"
         android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/sign_up_google"
-        />
+        app:layout_constraintTop_toBottomOf="@id/sign_up_google"/>
     <TextView
         android:id="@+id/loginInTextBtn"
         android:layout_width="wrap_content"

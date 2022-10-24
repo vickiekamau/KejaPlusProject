@@ -3,11 +3,8 @@ package com.kejaplus.application.Support
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
-import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.net.toUri
@@ -18,14 +15,10 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.kejaplus.Repository.PostImageRepository
-import com.kejaplus.application.MainActivity
+import com.kejaplus.application.ui.mainui.MainActivity
 import com.kejaplus.application.R
-import java.io.BufferedInputStream
 import java.io.IOException
-import java.net.HttpURLConnection
 import java.net.MalformedURLException
-import java.net.URL
-import java.util.*
 
 class PostWorker(context: Context, parameters: WorkerParameters) :
     Worker(context, parameters) {
@@ -42,13 +35,17 @@ class PostWorker(context: Context, parameters: WorkerParameters) :
         try {
             //val uriString = inputData.getString("imageUrl")
             //val imageId = inputData.getString("imageId")
-            val titleString = inputData.getString("notification title")
+            val notificationString = inputData.getStringArray("notification strings")
             val imageString = inputData.getStringArray("image Strings")
             val a = imageString?.get(0)
             val b = imageString?.get(1)
+            val title = notificationString?.get(0)
+            val message = notificationString?.get(1)
             val uriImage = stringToURI(a)
             Log.d("image captured ", uriImage.toString())
             Log.d("image position ", b!!)
+            Log.d("Title ", title!!)
+            Log.d("Message", message!!)
 
             // initializing the post remote repository that uploads the image to firebase database
             //postRemoteRepository = PostImageRepository()
@@ -65,7 +62,7 @@ class PostWorker(context: Context, parameters: WorkerParameters) :
                 Log.d("download", "success")
                 //Return the success with output data
 
-                sendNotification(titleString!!)
+                sendNotification(title!!,message!!)
                 return Result.success()
 
             } catch (e: IOException) {
@@ -79,7 +76,7 @@ class PostWorker(context: Context, parameters: WorkerParameters) :
 
     }
     //function that sends notification after the sync work is done
-    private fun sendNotification(title: String){
+    private fun sendNotification(title: String,message:String){
         // Create an explicit intent for an Activity in your app
         val intent = Intent(mContext, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -88,8 +85,8 @@ class PostWorker(context: Context, parameters: WorkerParameters) :
 
         val builder = NotificationCompat.Builder(mContext, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notifications)
-            .setContentTitle("KejaPlus")
-            .setContentText(title)
+            .setContentTitle(title)
+            .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             // Set the intent that will fire when the user taps the notification
             .setContentIntent(pendingIntent)

@@ -28,6 +28,8 @@
     <string name="search_property">Search Property</string>
     <string name="property_for_you">Property for You</string>
     <string name="name_logo">Keja Plus</string>
+    <string name="pref_theme_key">theme_mode</string>
+    <string name="system_theme">System Theme</string>
 
     <string-array name="property_category">
         <item>Single Family Houses</item>
@@ -101,6 +103,15 @@
         <item>Auto Battery Dark Mode</item>
     </string-array>
 
+
+        <string-array name="pref_theme_entries">
+            <item>System Theme</item>
+            <item>Light Mode</item>
+            <item>Dark Mode</item>
+            <item>Battery Saver Mode</item>
+        </string-array>
+
+
     <string name="google_Signup">project-403742347559</string>
 
     <string-array name="dark_mode_values">
@@ -136,4 +147,7 @@
     <string name="facebook_app_id">1100666860557271</string>
     <string name="fb_login_protocol_scheme">fb1100666860557271</string>
     <string name="facebook_client_token">093138ad7a7f7b6d34710cb4356ad2b9</string>
+    <string name="more">More</string>
+    <string name="mark_all_as_read">Mark All As Read</string>
+    <string name="clear_all">Clear All</string>
 </resources>

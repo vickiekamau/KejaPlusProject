@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Login_Form" parent="Theme.MaterialComponents.Light.Bridge">
         <item name="colorPrimary">@color/accent</item>
         <item name="colorPrimaryDark">@color/backColor</item>
@@ -33,6 +33,28 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Small</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="google_signIn_btn" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/small_btn</item>
+        <item name="android:foreground">?selectableItemBackground</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:drawablePadding">@dimen/view_padding</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Small</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="facebook_btn" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/small_btn</item>
+        <item name="android:foreground">?selectableItemBackground</item>
+        <item name="android:backgroundTint">@color/facebookBlue</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:drawablePadding">@dimen/view_padding</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Small</item>
+        <item name="android:textStyle">bold</item>
+
     </style>
 
     <style name="facebook_login" parent="Widget.AppCompat.Button">
@@ -147,6 +169,9 @@
     </style>
 
     <style name="Theme.KejaPlus.NoActionBar">Theme.MaterialComponents.DayNight.NoActionBar</style>
+
+
+
 
 
 
