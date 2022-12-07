@@ -11,10 +11,12 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import coil.load
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.kejaplus.application.databinding.FragmentPropertyDetailsBinding
 import com.squareup.picasso.Picasso
+import timber.log.Timber
 import java.io.File
 
 
@@ -55,15 +57,15 @@ class PropertyDetailsFragment : Fragment() {
         timeStamp = args.timeStamp
         propertyImage = args.propertyImage
 
-        Log.d("name",propertyName)
-        Log.d("type", propertyType)
-        Log.d("description", propertyDesc)
-        Log.d("condition",propertyCondition)
-        Log.d("location",propertyLocation)
-        Log.d("category",propertyCategory)
-        Log.d("price",price)
-        Log.d("timestamp",timeStamp)
-        Log.d("propertyImage",propertyImage)
+        Timber.tag("name").d(propertyName)
+        Timber.tag("type").d(propertyType)
+        Timber.tag("description").d(propertyDesc)
+        Timber.tag("condition").d(propertyCondition)
+        Timber.tag("location").d(propertyLocation)
+        Timber.tag("category").d(propertyCategory)
+        Timber.tag("price").d(price)
+        Timber.tag("timestamp").d(timeStamp)
+        Timber.tag("propertyImage").d(propertyImage)
 
         propertyDetailsBinding.amount.text = price
         propertyDetailsBinding.propertyName.text = propertyName
@@ -79,22 +81,24 @@ class PropertyDetailsFragment : Fragment() {
 
 
     }
-    private fun fetchPropertyImage(propertyImage:String){
+    private fun fetchPropertyImage(propertyImage:String) {
         var storageReference = FirebaseStorage.getInstance().getReference("images/")
         val progressBar: ProgressBar = propertyDetailsBinding.progressBar
         storageReference = FirebaseStorage.getInstance().reference.child(propertyImage)
-        Log.i("ImagePicasso",propertyImage)
-        val picasso = Picasso.get()
+        Timber.tag("ImagePicasso").i(propertyImage)
+        //val picasso = Picasso.get()
 
 
         storageReference.downloadUrl.addOnSuccessListener { uri -> // Got the download URL for the image
             progressBar.visibility = View.GONE
-            // Pass it to Picasso to download, show in ImageView and caching
-            picasso.load(uri.toString()).into(propertyDetailsBinding.propertyImage)
-        }.addOnFailureListener {e ->
+            // Pass it to Coil to download, show in ImageView and caching
+            //picasso.load(uri.toString()).into(propertyDetailsBinding.propertyImage)
+            propertyDetailsBinding.propertyImage.load(uri)
+        }.addOnFailureListener { e ->
             // Handle any errors
             progressBar.visibility = View.GONE
-            Toast.makeText(context,
+            Toast.makeText(
+                context,
                 "Failed " + e.message,
                 Toast.LENGTH_SHORT
             ).show()

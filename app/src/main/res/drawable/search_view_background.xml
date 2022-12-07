@@ -4,7 +4,7 @@
 
     <solid android:color="@color/white"/>
     <corners android:topLeftRadius="30dp"
-        android:topRightRadius="0dp"
+        android:topRightRadius="30dp"
         android:bottomLeftRadius="30dp"
         android:bottomRightRadius="30dp"/>
     <corners android:topRightRadius="30dp"
@@ -14,6 +14,7 @@
     <stroke
         android:width="0dp"
         android:color="@color/cardview_light_background"/>
+
 
 
 </shape>

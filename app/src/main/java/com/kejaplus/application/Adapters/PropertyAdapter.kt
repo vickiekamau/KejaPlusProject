@@ -15,8 +15,10 @@ import com.example.kejaplus.Model.SaveProperty
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 import android.widget.ProgressBar
+import coil.load
 import com.kejaplus.application.interfaces.Communicator
 import com.squareup.picasso.Picasso
+import timber.log.Timber
 
 
 class PropertyAdapter(
@@ -69,7 +71,7 @@ class PropertyAdapter(
     }
 
     override fun getItemCount(): Int {
-        Log.e("property size", propertyList.size.toString())
+        Timber.tag("property size").e(propertyList.size.toString())
         return propertyList.size
 
     }
@@ -81,24 +83,26 @@ class PropertyAdapter(
         val image = propertyItem.image
         storageReference = FirebaseStorage.getInstance().reference.child(image)
         holder.propertyName.text = propertyItem.property_name
-        Log.i("Image",image)
+        Timber.tag("Image").i(image)
 
-        val picasso = Picasso.get()
+        //val picasso = Picasso.get()
 
         storageReference.downloadUrl.addOnSuccessListener { uri -> // Got the download URL for the image
             holder.progressBar.visibility = View.GONE
             // Pass it to Picasso to download, show in ImageView and caching
-            picasso.load(uri.toString()).into(holder.imageUrl)
-        }.addOnFailureListener {e ->
+            //picasso.load(uri.toString()).into(holder.imageUrl)
+            holder.imageUrl.load(uri)
+        }.addOnFailureListener { e ->
             // Handle any errors
             holder.progressBar.visibility = View.GONE
-            Toast.makeText(context,
+            Toast.makeText(
+                context,
                 "Failed " + e.message,
                 Toast.LENGTH_SHORT
             ).show()
         }
 
-        }
+    }
 
 
     }

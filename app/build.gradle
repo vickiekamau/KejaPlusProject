@@ -131,6 +131,8 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:12.1.0'
 
 
+    //image  loader
+    implementation("io.coil-kt:coil:2.1.0")
 
     //pagging
     implementation 'androidx.paging:paging-runtime-ktx:3.1.1'

@@ -88,10 +88,6 @@ class AddPropertyTwoFragment: Fragment() {
         imageText = args.imageUrl
         val uriImage = imageText.toUri()
 
-        Log.d("property1",propertyText)
-        Log.d("bedrooms2", noBedroomText)
-        Log.d("location3", locationText)
-        Log.d("imageUrl4",imageText)
 
         val ifOnline = viewModel.netConnectivity(mContext)
         if(ifOnline) {

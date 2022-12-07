@@ -15,14 +15,14 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+
+
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    //private val googleSignInHandler: GoogleSignInHandler,
     @ApplicationContext context: Context
 ) : ViewModel()
  {
     private val repository = AuthenticationRepository(context)
-
 
 
     private val _signInUserStatus = MutableLiveData<Resource<String>>()

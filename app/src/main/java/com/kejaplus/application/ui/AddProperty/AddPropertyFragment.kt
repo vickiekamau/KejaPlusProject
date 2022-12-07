@@ -1,5 +1,6 @@
 package com.kejaplus.application.ui.AddProperty
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.net.Uri
@@ -22,11 +23,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import coil.load
 import com.kejaplus.application.BuildConfig
 import com.kejaplus.application.R
 import com.kejaplus.application.Support.InputValidator
 import com.kejaplus.application.databinding.FragmentAddPropertyBinding
 import com.kejaplus.application.ui.Map.MapsFragment
+import timber.log.Timber
 import java.io.File
 
 
@@ -43,18 +46,19 @@ class AddPropertyFragment : Fragment() {
                 previewImage.setImageURI(uri)
                 previewImage.tag = uri
                 imageUrl = uri.toString()
-                Log.e("cameraImage",previewImage.tag.toString())
+                Timber.tag("cameraImage").e(previewImage.tag.toString())
             }
         }
     }
 
     private val selectImageFromGalleryResult = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        uri?.let { previewImage.setImageURI(uri)
+        uri?.let {
+            previewImage.setImageURI(uri)
             previewImage.tag = uri;
             imageUrl = uri.toString()
-            Log.e("galleryImage",previewImage.tag.toString())
-            Log.e("gallery image",uri.toString()
-            )}
+            Timber.tag("galleryImage").e(previewImage.tag.toString())
+            Timber.tag("gallery image").e(uri.toString())
+        }
     }
 
     private var latestTmpUri: Uri? = null
@@ -63,18 +67,18 @@ class AddPropertyFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        addPropertyBinding = FragmentAddPropertyBinding.inflate(inflater,container,false)
+        addPropertyBinding = FragmentAddPropertyBinding.inflate(inflater, container, false)
 
-        Log.e("Add property fragment", "fragment add property")
+        Timber.tag("Add property fragment").e("fragment add property")
 
         //property strings
         val property = resources.getStringArray(R.array.property_category)
-        val propertyStringAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item,property)
+        val propertyStringAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, property)
         addPropertyBinding.propertyAutoCompleteTextView.setAdapter(propertyStringAdapter)
 
         //bedroom Strings
         val noBedroom = resources.getStringArray(R.array.number_bedroom)
-        val bedroomStringAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item,noBedroom)
+        val bedroomStringAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, noBedroom)
         addPropertyBinding.bedroomAutoCompleteTextView.setAdapter(bedroomStringAdapter)
 
         // location Strings
@@ -85,14 +89,17 @@ class AddPropertyFragment : Fragment() {
             findNavController().navigate(R.id.mapsFragment)
         }
 
-        addPropertyBinding.btnNext.setOnClickListener(View.OnClickListener { view ->  inputValidation() })
-        addPropertyBinding.addButton1.setOnClickListener(View.OnClickListener { view -> fileUpload(context)
-            addPropertyBinding.addButton1.visibility= View.INVISIBLE
+        addPropertyBinding.btnNext.setOnClickListener(View.OnClickListener { view -> inputValidation() })
+        addPropertyBinding.addButton1.setOnClickListener(View.OnClickListener { view ->
+            fileUpload(context)
+            addPropertyBinding.addButton1.visibility = View.INVISIBLE
             addPropertyBinding.closeButton1.visibility = View.VISIBLE
         })
 
-        addPropertyBinding.closeButton1.setOnClickListener(View.OnClickListener { addPropertyBinding.iDImageView.setImageResource(R.drawable.picture)
-            addPropertyBinding.addButton1.visibility= View.VISIBLE
+        addPropertyBinding.closeButton1.setOnClickListener(View.OnClickListener {
+            addPropertyBinding.iDImageView.setImageResource(R.drawable.picture)
+            //addPropertyBinding.iDImageView.load(R.drawable.picture)
+            addPropertyBinding.addButton1.visibility = View.VISIBLE
             addPropertyBinding.closeButton1.visibility = View.INVISIBLE
         })
 
@@ -100,6 +107,7 @@ class AddPropertyFragment : Fragment() {
 
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun inputValidation() {
         val validator = InputValidator()
 
@@ -122,10 +130,10 @@ class AddPropertyFragment : Fragment() {
     private fun imageValidation(imageView: ImageView):Boolean {
         return if(addPropertyBinding.iDImageView.tag != "image1"){
             true
-        } else{
+        } else {
             addPropertyBinding.errorX.text = "Image Required"
-            Log.e("Image", "Image Required")
-            Log.e("ImageURL", addPropertyBinding.iDImageView.tag.toString() )
+            Timber.tag("Image").e("Image Required")
+            Timber.tag("ImageURL").e(addPropertyBinding.iDImageView.tag.toString())
             false
         }
 
@@ -138,10 +146,11 @@ class AddPropertyFragment : Fragment() {
         navController.currentBackStackEntry?.savedStateHandle?.getLiveData<String>(MapsFragment.COORDINATE_KEY)?.observe(
                 viewLifecycleOwner) { coordinate ->
             // Do something with the result.
-             if(!coordinate.isEmpty()){
+             if(!coordinate.isEmpty()) {
                  locationCoordinates = coordinate
-                 Log.d("Location Coordinates",locationCoordinates)
-                 addPropertyBinding.locationInput.text = Editable.Factory.getInstance().newEditable(locationCoordinates)
+                 Timber.tag("Location Coordinates").d(locationCoordinates)
+                 addPropertyBinding.locationInput.text =
+                     Editable.Factory.getInstance().newEditable(locationCoordinates)
                  //addPropertyBinding.locationLayout.isEnabled = false
                  //addPropertyBinding.locationLayout.isEndIconVisible =true
                  addPropertyBinding.locationLayout.isFocusable = false
@@ -183,7 +192,7 @@ class AddPropertyFragment : Fragment() {
             getTmpFileUri().let { uri ->
                 latestTmpUri = uri
                 takeImageResult.launch(uri)
-                Log.e("camera image", uri.toString())
+                Timber.tag("camera image").e(uri.toString())
             }
         }
     }

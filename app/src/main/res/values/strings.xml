@@ -150,4 +150,5 @@
     <string name="more">More</string>
     <string name="mark_all_as_read">Mark All As Read</string>
     <string name="clear_all">Clear All</string>
+    <string name="filter_list">filter list</string>
 </resources>
